@@ -17,6 +17,15 @@
     socket.on('disconnect', () => {
       console.log('Lost connection to the server');
     });
+
+    socket.emit('message', {
+      id: 1,
+      nombre: 'Fernando',
+    });
+
+    socket.on('message', (payload) => {
+      console.log(payload);
+    });
   </script>
 </body>
 </html>
