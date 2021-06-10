@@ -9,6 +9,7 @@ io.on('connection', client => {
   });
 
   client.on('emitMessage', ( payload ) => {
+    console.log(payload);
     // io.emit('newMessage', { name: 'César Arellano' }); Emite a todos.
     client.broadcast.emit('newMessage', payload ); // Emitir a todos menos al cliente.
   });

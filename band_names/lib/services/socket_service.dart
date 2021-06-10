@@ -40,10 +40,11 @@ class SocketService with ChangeNotifier {
       notifyListeners();
     });
 
-    this._socket.on('newMessage', ( payload ) {
-      print('NewMessage $payload');
-      print('Name: ${ payload['name'] ?? 'It did not send name' }');
-      print('Message 2: ${ payload['message2'] ?? 'It did not send message2' }');
-    });
+    // this._socket.on('newMessage', ( payload ) {
+    //   print('NewMessage $payload');
+    //   print('Name: ${ payload['name'] ?? 'It did not send name' }');
+    //   print('Message 2: ${ payload['message2'] ?? 'It did not send message2' }');
+    // });
+
   }
 }
