@@ -7,7 +7,7 @@ enum ServerStatus { Online, Offline, Connecting }
 class SocketService with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.Connecting;
   IO.Socket _socket;
-
+  
   ServerStatus get serverStatus => this._serverStatus;
 
   IO.Socket get socket => this._socket;
