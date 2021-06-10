@@ -31,15 +31,19 @@ class SocketService with ChangeNotifier {
     // Status Online
     this._socket.onConnect((_) {
       this._serverStatus = ServerStatus.Online;
-      print('Connected by socket');
       notifyListeners();
     });
 
    // Status Offline
     this._socket.onDisconnect((_) {
       this._serverStatus = ServerStatus.Offline;
-      print('Disconnected');
       notifyListeners();
+    });
+
+    this._socket.on('newMessage', ( payload ) {
+      print('NewMessage $payload');
+      print('Name: ${ payload['name'] ?? 'It did not send name' }');
+      print('Message 2: ${ payload['message2'] ?? 'It did not send message2' }');
     });
   }
 }

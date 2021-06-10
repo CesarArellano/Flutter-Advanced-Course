@@ -8,9 +8,9 @@ io.on('connection', client => {
     console.log('Client Disconnected');
   });
 
-  client.on('message', ( payload ) => {
-    console.log('Message!!!', payload);
-    io.emit('message', { admin: 'New Message' });
+  client.on('emitMessage', ( payload ) => {
+    // io.emit('newMessage', { name: 'César Arellano' }); Emite a todos.
+    client.broadcast.emit('newMessage', payload ); // Emitir a todos menos al cliente.
   });
   
 });

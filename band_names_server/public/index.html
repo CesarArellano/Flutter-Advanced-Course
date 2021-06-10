@@ -10,7 +10,7 @@
   <h1>Acceso denegado</h1>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    const socket = io();
+    var socket = io();
     socket.on('connect', () => {
       console.log('Connected to server');
     });
