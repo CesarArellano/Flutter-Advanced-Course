@@ -1,3 +1,5 @@
+const BandModel = require('./band-model');
+
 class BandsModel {
   constructor() {
     this.bands = [];

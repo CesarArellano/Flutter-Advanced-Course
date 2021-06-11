@@ -26,6 +26,11 @@
     socket.on('newMessage', (payload) => {
       console.log(payload);
     });
+
+    socket.on('activeBands', ( bands ) => {
+      console.clear();
+      console.table(bands);
+    });
   </script>
 </body>
 </html>
