@@ -18,7 +18,7 @@ class SocketService with ChangeNotifier {
   }
 
   void _initConfig() {
-    String urlSocket = 'http://192.168.31.161:3000';
+    String urlSocket = 'https://flutter-socket-server-cesar.herokuapp.com/';
 
     this._socket = IO.io(
       urlSocket,

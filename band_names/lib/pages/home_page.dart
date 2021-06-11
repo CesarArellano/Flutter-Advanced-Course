@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
 import 'package:band_names/services/socket_service.dart';
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     socketService.socket.off('activeBands');
     super.dispose();
   }
+  
   @override
   Widget build(BuildContext context) {
     final socketService = Provider.of<SocketService>(context);
@@ -54,9 +56,19 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: ListView.builder(
-        itemCount: bands.length, 
-        itemBuilder: (context, i) => _bandTile(bands[i])
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 10.0),
+          _showGraph(),
+          SizedBox(height: 20.0),
+          Expanded(
+            child: ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: bands.length,
+              itemBuilder: (context, i) => _bandTile(bands[i])
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -147,5 +159,27 @@ class _HomePageState extends State<HomePage> {
       socketService.emit('addBand', name);
     }
     Navigator.pop(context);
+  }
+
+  Widget _showGraph() {
+    Map<String, double> dataMap = new Map();
+    
+    bands.forEach((band) {
+        dataMap.putIfAbsent(band.name, () => band.votes.toDouble());
+    });
+
+    return Container(
+      width: double.infinity,
+      height: 200,
+      child: PieChart(
+        dataMap: (bands.length > 0) ? dataMap : { 'Bands': 0.0 },
+        chartType: ChartType.ring,
+        animationDuration: Duration(milliseconds: 1000),
+        chartLegendSpacing: 30,
+        chartValuesOptions: ChartValuesOptions(
+          showChartValuesInPercentage: true,
+        ),
+      ),
+    );
   }
 }
