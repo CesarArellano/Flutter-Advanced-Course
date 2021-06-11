@@ -22,8 +22,9 @@ class _HomePageState extends State<HomePage> {
       this.bands = (bands as List)
         .map((band) => BandModel.fromMap(band))
         .toList();
+        
+      setState(() {});
     });
-    setState(() {});
     super.initState();
   }
 
@@ -64,6 +65,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _bandTile(BandModel band) {
+    final socketService = Provider.of<SocketService>(context, listen: false);
+
     return Dismissible(
       key: Key(band.id),
       direction: DismissDirection.endToStart,
@@ -86,7 +89,9 @@ class _HomePageState extends State<HomePage> {
         ),
         title: Text(band.name),
         trailing: Text('${ band.votes }', style: TextStyle(fontSize: 20.0)),
-        onTap: () {},
+        onTap: () {
+          socketService.emit('voteBand', band.id);
+        },
       ),
     );
   }

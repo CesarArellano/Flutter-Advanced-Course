@@ -23,5 +23,10 @@ io.on('connection', client => {
     // io.emit('newMessage', { name: 'César Arellano' }); Emite a todos.
     client.broadcast.emit('newMessage', payload ); // Emitir a todos menos al cliente.
   });
+
+  client.on('voteBand', (id) => {
+    bands.voteBand(id);
+    io.emit('activeBands', bands.getBands());
+  });
   
 });
