@@ -28,5 +28,16 @@ io.on('connection', client => {
     bands.voteBand(id);
     io.emit('activeBands', bands.getBands());
   });
+
+  client.on('addBand', (name) => {
+    const band = new BandModel(name);
+    bands.addBand(band);
+    io.emit('activeBands', bands.getBands());
+  });
+
+  client.on('deleteBand', (id) => {
+    bands.deleteBand(id);
+    io.emit('activeBands', bands.getBands());
+  });
   
 });
