@@ -1,3 +1,4 @@
+import 'package:chat_app/widgets/custom_input.dart';
 import 'package:flutter/material.dart';
 
 
@@ -64,11 +65,11 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 40),
+      padding: EdgeInsets.symmetric(horizontal: 50.0),
       child: Column(
         children: <Widget> [
-          TextField(),
-          TextField(),
-
+          CustomInput(),
           ElevatedButton(
             onPressed: () {},
             child: Text('Ingresar', style: TextStyle(fontSize: 16.0))
