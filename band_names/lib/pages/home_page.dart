@@ -44,23 +44,21 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Band Names', style: TextStyle(color: Colors.black87)),
-        backgroundColor: Colors.white,
+        title: Text('Band Names'),
+        backgroundColor: Colors.green,
         elevation: 1,
         actions: <Widget>[
           Container(
             margin: EdgeInsets.only(right: 10),
             child: (socketService.serverStatus == ServerStatus.Online)
-              ? Icon(Icons.check_circle, color: Colors.blue[300])
-              : Icon(Icons.offline_bolt, color: Colors.red),
+              ? Icon(Icons.check_circle)
+              : Icon(Icons.wifi_off),
           )
         ],
       ),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 10.0),
           _showGraph(),
-          SizedBox(height: 20.0),
           Expanded(
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
@@ -169,15 +167,23 @@ class _HomePageState extends State<HomePage> {
     });
 
     return Container(
+      
       width: double.infinity,
-      height: 200,
-      child: PieChart(
-        dataMap: (bands.length > 0) ? dataMap : { 'Bands': 0.0 },
-        chartType: ChartType.ring,
-        animationDuration: Duration(milliseconds: 1000),
-        chartLegendSpacing: 30,
-        chartValuesOptions: ChartValuesOptions(
-          showChartValuesInPercentage: true,
+      height: 250,
+      child: Card(
+        elevation: 4,
+        margin: EdgeInsets.zero,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: PieChart(
+            dataMap: (bands.length > 0) ? dataMap : { 'Bands': 0.0 },
+            chartType: ChartType.ring,
+            chartLegendSpacing: 40,
+            animationDuration: Duration(milliseconds: 1000),        
+            chartValuesOptions: ChartValuesOptions(
+              showChartValuesInPercentage: true,
+            ),
+          ),
         ),
       ),
     );
