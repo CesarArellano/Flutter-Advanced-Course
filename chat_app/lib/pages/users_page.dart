@@ -18,7 +18,7 @@ class _UsersPageState extends State<UsersPage> {
     User(uid: '3', name: 'Patricia', email: 'paty@gmail.com', online: true),
     User(uid: '4', name: 'Melissa', email: 'meli@gmail.com', online: true),
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +62,9 @@ class _UsersPageState extends State<UsersPage> {
 
   Widget _usersListTitle(User user) {
     return ListTile(
+        onTap: () {
+          Navigator.pushNamed(context, 'chat');
+        },
         title: Text(user.name),
         subtitle: Text(user.email ?? 'No Email'),
         leading: CircleAvatar(
