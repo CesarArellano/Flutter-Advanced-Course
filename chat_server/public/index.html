@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socket Server</title>
+</head>
+<body>
+  <h1>Acceso denegado</h1>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+    socket.on('disconnect', () => {
+      console.log('Lost connection to the server');
+    });
+
+    socket.emit('message', {
+      id: 1,
+      nombre: 'Fernando',
+    });
+
+    socket.on('newMessage', (payload) => {
+      console.log(payload);
+    });
+
+    socket.on('activeBands', ( bands ) => {
+      console.clear();
+      console.table(bands);
+    });
+  </script>
+</body>
+</html>
