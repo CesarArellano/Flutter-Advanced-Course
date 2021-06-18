@@ -1,8 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
+import 'package:chat_app/widgets/chat_message.dart';
 
 class ChatPage extends StatefulWidget {
 
@@ -10,9 +11,11 @@ class ChatPage extends StatefulWidget {
   _ChatPageState createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   final _textController = new TextEditingController();
   final _focusNode = new FocusNode();
+  List<ChatMessage> _messages = [];
+
   bool isWriting = false;
 
   @override
@@ -40,16 +43,15 @@ class _ChatPageState extends State<ChatPage> {
             Flexible(
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
-                itemBuilder: ( _ , i) => Text('$i'),
+                itemCount: _messages.length,
+                itemBuilder: ( _ , i) => _messages[i],
                 reverse: true,
               )
             ),
-            Divider(height: 1),
+            Divider(height: 1.5),
             Container(
               height: 70,
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
+              color: Colors.white,
               child: _inputChat()
             )
           ],
@@ -99,6 +101,8 @@ class _ChatPageState extends State<ChatPage> {
                       color: Colors.blue[400]
                     ),
                     child: RawMaterialButton(
+                      highlightElevation: 3,
+                      fillColor: Colors.white,
                       padding: EdgeInsets.all(15),
                       shape: CircleBorder(),
                       child: Icon(Icons.send, color: (isWriting) ? Colors.blue : Colors.grey),
@@ -115,12 +119,25 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  void _handleSubmit(String value) {
-    print('hola');
+  void _handleSubmit(String text) {
+    if(text.length == 0) return;
+
     _textController.clear();
     _focusNode.requestFocus();
+    final newMessage = new ChatMessage(text,'123', AnimationController(vsync: this, duration: Duration(milliseconds: 500)));
+    _messages.insert(0, newMessage);
+    newMessage.animationController.forward();
     setState(() {
       isWriting = false;
     });
+  }
+
+  @override
+  void dispose() {
+    //TODO: Off del socket
+    for(ChatMessage message in _messages) {
+      message.animationController.dispose();
+    }
+    super.dispose();
   }
 }
