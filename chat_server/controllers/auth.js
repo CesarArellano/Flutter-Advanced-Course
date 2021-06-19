@@ -81,11 +81,22 @@ const loginUser = async (req, res = response) => {
   
 }
 
-const renewToken = async(req, res = responde) => {
-  res.json({
-    ok: true,
-    msg: req.uid
-  })
+const renewToken = async (req, res = responde) => {
+  const uid  = req.uid;
+
+  try {
+    const newToken = await generateJWT(uid);
+    const dbUser = await User.findById(uid);
+    
+    res.json({
+      ok: true,
+      user: dbUser,
+      token: newToken
+    });
+
+  } catch (error) {
+    errorServer(error);
+  }
 };
 
 module.exports = {
