@@ -11,8 +11,6 @@ const app = express();
 // Lectura y parseo del Body
 app.use( express.json() );
 
-
-
 // Node server
 const server = require('http').createServer(app);
 module.exports.io = require('socket.io')(server);
