@@ -20,4 +20,11 @@ const UserSchema = Schema({
   }
 });
 
+// Overwriting in the toJSON Method to display some properties
+UserSchema.method('toJSON', function() {
+  const { __v, _id, password, ...object } = this.toObject();
+  object.uid = _id;
+  return object;
+});
+
 module.exports = model('User', UserSchema);

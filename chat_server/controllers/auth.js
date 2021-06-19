@@ -1,15 +1,39 @@
 const { response } = require('express');
+const bcrypt = require('bcryptjs');
+
 const User = require('../models/user');
 
 const createUser = async (req, res = response) => {
   
-  const user = new User(req.body);
-  await user.save();
+  try{
+    const { email, password } = req.body;
+    const emailExists = await User.findOne({ email });
+    if(emailExists) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Invalid credentials'
+      });
+    }
+    const user = new User(req.body);
+    
+    // Encrypting password
+    const salt = bcrypt.genSaltSync();
+    user.password = bcrypt.hashSync(password, salt);
 
-  res.json({
-    ok: true,
-    body: req.body
-  });
+    await user.save();
+
+    res.json({
+      ok: true,
+      body: user
+    });
+
+  } catch(error) {
+    console.log(error);
+    res.status(500).json({
+      ok: false,
+      msg: 'Talk to the administrator'
+    });
+  }
 }
 
 module.exports = {
