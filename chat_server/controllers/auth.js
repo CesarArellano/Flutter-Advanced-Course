@@ -4,6 +4,14 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const { generateJWT } = require('../helpers/jwt');
 
+const errorServer = (error) => {
+  console.log(error);
+  res.status(500).json({
+    ok: false,
+    msg: 'Talk to the administrator'
+  });
+}
+
 const createUser = async (req, res = response) => {
   
   try{
@@ -33,14 +41,55 @@ const createUser = async (req, res = response) => {
     });
 
   } catch(error) {
-    console.log(error);
-    res.status(500).json({
-      ok: false,
-      msg: 'Talk to the administrator'
-    });
+    errorServer(error);
   }
 }
 
+const loginUser = async (req, res = response) => {
+  const { email, password } = req.body;
+
+  try {
+    const dbUser = await User.findOne({ email });
+
+    if( !dbUser ) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Email not found'
+      });
+    }
+    
+    // Validating password
+    const validPassword = bcrypt.compareSync(password, dbUser.password);
+    
+    if( !validPassword ) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'Invalid credentials'
+      });
+    }
+    
+    const token = await generateJWT(dbUser.id);
+
+    res.json({
+      ok: true,
+      usuario: dbUser,
+      token
+    });
+  } catch (error) {
+    errorServer(error);
+  }
+  
+}
+
+const renewToken = async(req, res = responde) => {
+  res.json({
+    ok: true,
+    msg: req.uid
+  })
+};
+
 module.exports = {
-  createUser
+  createUser,
+  loginUser,
+  renewToken
 };
