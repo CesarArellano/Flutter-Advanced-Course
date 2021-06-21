@@ -1,3 +1,4 @@
+import 'package:chat_app/helpers/show_alert.dart';
 import 'package:chat_app/models/user_model.dart';
 import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/blue_btn.dart';
@@ -84,9 +85,12 @@ class __FormState extends State<_Form> {
             ? null
             : () async {
               FocusScope.of(context).unfocus();
-              final User user = await authService.login(emailController.text, passController.text);
-              print(user.uid);
-              // Navigator.pushReplacementNamed(context, 'users');
+              final loginOk = await authService.login(emailController.text, passController.text);
+              if (loginOk) {
+                Navigator.pushReplacementNamed(context, 'users');
+              } else {
+                showAlert(context,'Bad login', 'Check your credentials ');
+              }
             },
           )
         ]

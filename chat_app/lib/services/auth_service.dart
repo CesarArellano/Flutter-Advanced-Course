@@ -35,12 +35,15 @@ class AuthService with ChangeNotifier {
       }
     );
 
+    this.authenticating = false;
+
     if(resp.statusCode == 200) {
       final loginResponse = loginResponseFromJson(resp.body);
       this.user = loginResponse.user;
+      return true;
+    } else {
+      return false;
     }
-
-    this.authenticating = false;
-    return this.user ?? [];
+    
   }
 }
