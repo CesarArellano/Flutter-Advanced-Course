@@ -1,9 +1,12 @@
+import 'package:chat_app/models/user_model.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/blue_btn.dart';
 import 'package:flutter/material.dart';
 
 import 'package:chat_app/widgets/logo.dart';
 import 'package:chat_app/widgets/labels.dart';
 import 'package:chat_app/widgets/custom_input.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -56,6 +59,8 @@ class __FormState extends State<_Form> {
   final passController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 50.0),
       padding: EdgeInsets.symmetric(horizontal: 50.0),
@@ -75,8 +80,13 @@ class __FormState extends State<_Form> {
             isPassword: true,
           ),
           BlueBtn(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, 'users');
+            onPressed: authService.authenticating 
+            ? null
+            : () async {
+              FocusScope.of(context).unfocus();
+              final User user = await authService.login(emailController.text, passController.text);
+              print(user.uid);
+              // Navigator.pushReplacementNamed(context, 'users');
             },
           )
         ]
