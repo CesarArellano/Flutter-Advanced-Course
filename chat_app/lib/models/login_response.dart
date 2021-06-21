@@ -10,12 +10,12 @@ class LoginResponse {
   LoginResponse({
     this.ok = false,
     this.user,
-    this.token,
+    this.token = '',
   });
 
   bool ok;
   User? user;
-  String? token;
+  String token;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
     ok: json["ok"],

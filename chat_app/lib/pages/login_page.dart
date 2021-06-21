@@ -1,5 +1,4 @@
 import 'package:chat_app/helpers/show_alert.dart';
-import 'package:chat_app/models/user_model.dart';
 import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/blue_btn.dart';
 import 'package:flutter/material.dart';
