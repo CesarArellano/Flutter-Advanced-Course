@@ -33,7 +33,7 @@ class AuthService with ChangeNotifier {
     await _storage.delete(key: 'token');
   }
 
-  Future login(String email, String password) async {
+  Future<bool> login(String email, String password) async {
     this.authenticating = true;
 
     final data = {
@@ -60,6 +60,58 @@ class AuthService with ChangeNotifier {
       return false;
     }
 
+  }
+
+  Future register(String name, String email, String password) async {
+    this.authenticating = true;
+
+    final data = {
+      'name': name,
+      'email': email,
+      'password': password,
+    };
+
+    final resp = await http.post(
+      Uri.parse('${Environment.apiUrl}/login/new'),
+      body: jsonEncode(data),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    );
+    print(resp.body);
+    this.authenticating = false;
+
+    if(resp.statusCode == 200) {
+      final loginResponse = loginResponseFromJson(resp.body);
+      this.user = loginResponse.user;
+      this._saveToken(loginResponse.token);
+      return true;
+    } else {
+      final respBody = jsonDecode(resp.body);
+      return respBody['msg'];
+    }
+  }
+
+  Future<bool> isLoggedIn() async {
+    final token = await this._storage.read(key: 'token');
+    
+    final resp = await http.get(
+      Uri.parse('${Environment.apiUrl}/login/renew'),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-token': token ?? ''
+      }
+    );
+
+    if ( resp.statusCode == 200 ) {
+      final loginResponse = loginResponseFromJson(resp.body);
+      this.user = loginResponse.user;
+      this._saveToken(loginResponse.token);
+      return true;
+    } else {
+      this.logout();
+      return false;
+    }
   }
 
   Future _saveToken(String token) async {

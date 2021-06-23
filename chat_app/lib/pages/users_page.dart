@@ -1,6 +1,9 @@
+import 'package:chat_app/services/socket_service.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/models/user_model.dart';
 
 class UsersPage extends StatefulWidget {
@@ -21,20 +24,30 @@ class _UsersPageState extends State<UsersPage> {
 
   @override
   Widget build(BuildContext context) {
+    final socketService = Provider.of<SocketService>(context);
+    final authService = Provider.of<AuthService>(context);
+    final user = authService.user;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Mi nombre', style: TextStyle(color: Colors.black87)),
+        title: Text(user!.name, style: TextStyle(color: Colors.black87)),
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
-          onPressed: (){}, 
+          onPressed: (){
+            socketService.disconnect();
+            Navigator.pushReplacementNamed(context, 'login');
+            AuthService.deleteToken();
+          }, 
           icon: Icon(Icons.exit_to_app, color: Colors.black87)
         ),
         actions: [
           Container(
             margin: EdgeInsets.only(right: 10.0),
-            child: Icon(Icons.check_circle, color: Colors.blue[400])
+            child: (socketService.serverStatus == ServerStatus.Online)
+            ? Icon(Icons.check_circle, color: Colors.blue[400])
+            : Icon(Icons.wifi_lock, color: Colors.red)
           )
         ],
       ),

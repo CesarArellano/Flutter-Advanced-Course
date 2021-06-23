@@ -1,9 +1,13 @@
-import 'package:chat_app/widgets/blue_btn.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:chat_app/helpers/show_alert.dart';
+import 'package:chat_app/services/socket_service.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/widgets/logo.dart';
 import 'package:chat_app/widgets/labels.dart';
 import 'package:chat_app/widgets/custom_input.dart';
+import 'package:chat_app/widgets/blue_btn.dart';
 
 class RegisterPage extends StatelessWidget {
 
@@ -58,6 +62,9 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
+    
     return Container(
       margin: EdgeInsets.symmetric(vertical: 50.0),
       padding: EdgeInsets.symmetric(horizontal: 50.0),
@@ -84,8 +91,17 @@ class __FormState extends State<_Form> {
           ),
           BlueBtn(
             text: 'Create',
-            onPressed: () {
-              print(emailController.text);
+            onPressed: (authService.authenticating)
+            ? null
+            : () async {
+              socketService.connect();
+              FocusScope.of(context).unfocus();
+              final registerOk = await authService.register(nameController.text, emailController.text, passController.text);
+              if (registerOk == true) {
+                Navigator.pushReplacementNamed(context, 'users');
+              } else {
+                showAlert(context, 'Bad register', registerOk);
+              }
             },
           )
         ]

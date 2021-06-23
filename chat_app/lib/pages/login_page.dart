@@ -1,5 +1,6 @@
 import 'package:chat_app/helpers/show_alert.dart';
 import 'package:chat_app/services/auth_service.dart';
+import 'package:chat_app/services/socket_service.dart';
 import 'package:chat_app/widgets/blue_btn.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +61,8 @@ class __FormState extends State<_Form> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
-
+    final socketService = Provider.of<SocketService>(context);
+    
     return Container(
       margin: EdgeInsets.symmetric(vertical: 50.0),
       padding: EdgeInsets.symmetric(horizontal: 50.0),
@@ -86,9 +88,10 @@ class __FormState extends State<_Form> {
               FocusScope.of(context).unfocus();
               final loginOk = await authService.login(emailController.text, passController.text);
               if (loginOk) {
+                socketService.connect();
                 Navigator.pushReplacementNamed(context, 'users');
               } else {
-                showAlert(context,'Bad login', 'Check your credentials ');
+                showAlert(context, 'Bad login', 'Check your credentials');
               }
             },
           )
