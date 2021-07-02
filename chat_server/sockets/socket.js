@@ -1,6 +1,6 @@
 const { io } = require('../index');
 const { checkJWT } = require('../helpers/jwt');
-const { userConnected, userDisconnected } = require('../controllers/socket');
+const { userConnected, userDisconnected, saveMessage } = require('../controllers/socket');
 
 // Socket Messages
 io.on('connection', async (client) => {
@@ -14,7 +14,8 @@ io.on('connection', async (client) => {
   // Global Room
   client.join( uid );
   
-  client.on('personal-message', ( payload ) => {
+  client.on('personal-message', async ( payload ) => {
+    await saveMessage( payload );
     io.to(payload.to).emit('personal-message', payload)
   });
 
