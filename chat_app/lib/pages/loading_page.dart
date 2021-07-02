@@ -28,7 +28,7 @@ class LoadingPage extends StatelessWidget {
 
     final authenticated = await authService.isLoggedIn();
 
-    if ( authenticated ) {
+    if (authenticated) {
       socketService.connect();
 
       Navigator.pushReplacement(
