@@ -1,3 +1,4 @@
+import 'package:chat_app/services/chat_service.dart';
 import 'package:chat_app/services/socket_service.dart';
 import 'package:chat_app/services/users_services.dart';
 import 'package:flutter/material.dart';
@@ -80,6 +81,8 @@ class _UsersPageState extends State<UsersPage> {
   Widget _usersListTitle(User user) {
     return ListTile(
         onTap: () {
+          final chatService = Provider.of<ChatService>(context, listen: false);
+          chatService.userTo = user;
           Navigator.pushNamed(context, 'chat');
         },
         title: Text(user.name),
