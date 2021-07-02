@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/services/chat_service.dart';
+import 'package:chat_app/services/socket_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -16,14 +18,25 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   final _textController = new TextEditingController();
   final _focusNode = new FocusNode();
+
+  ChatService? chatService;
+  SocketService? socketService;
+  AuthService? authService;
+
   List<ChatMessage> _messages = [];
 
   bool isWriting = false;
 
   @override
-  Widget build(BuildContext context) {
-    final chatService = Provider.of<ChatService>(context);
+  void initState() {
+    super.initState();
+    chatService = Provider.of<ChatService>(context, listen: false);
+    socketService = Provider.of<SocketService>(context, listen: false);
+    authService = Provider.of<AuthService>(context, listen: false);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -33,11 +46,11 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
         title: Row(
           children: [
             CircleAvatar(  
-              child: Text(chatService.userTo!.name.substring(0,2), style: TextStyle(fontSize: 12)),
+              child: Text(chatService!.userTo!.name.substring(0,2), style: TextStyle(fontSize: 12)),
               backgroundColor: Colors.blueAccent,
             ),
             SizedBox(width: 10),
-            Text(chatService.userTo!.name, style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w400))
+            Text(chatService!.userTo!.name, style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w400))
           ],
         )
       ),
@@ -133,6 +146,11 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     newMessage.animationController.forward();
     setState(() {
       isWriting = false;
+    });
+    socketService!.emit('personal-message', {
+      'from': authService!.user!.uid,
+      'to': chatService!.userTo!.uid,
+      'message': text
     });
   }
 

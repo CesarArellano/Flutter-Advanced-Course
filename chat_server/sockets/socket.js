@@ -10,8 +10,14 @@ io.on('connection', async (client) => {
   if( !validated ) return client.disconnect();
 
   userConnected(uid);
-
-
+  
+  // Global Room
+  client.join( uid );
+  
+  client.on('personal-message', ( payload ) => {
+    console.log(payload);
+  });
+  
   client.on('disconnect', () => {
     userDisconnected(uid);
   });  
