@@ -15,9 +15,9 @@ io.on('connection', async (client) => {
   client.join( uid );
   
   client.on('personal-message', ( payload ) => {
-    console.log(payload);
+    io.to(payload.to).emit('personal-message', payload)
   });
-  
+
   client.on('disconnect', () => {
     userDisconnected(uid);
   });  
