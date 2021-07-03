@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chat_app/models/message_response.dart';
 import 'package:chat_app/services/auth_service.dart';
 import 'package:chat_app/services/chat_service.dart';
 import 'package:chat_app/services/socket_service.dart';
@@ -35,6 +36,22 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
     authService = Provider.of<AuthService>(context, listen: false);
 
     socketService!.socket!.on('personal-message', _listenMessages );
+    
+    _loadChatHistory(this.chatService!.userTo!.uid ?? '');
+  }
+
+  void _loadChatHistory(String uid) async {
+    List<Message> chat = await chatService!.getChat(uid);
+    final history = chat.map((m) => new ChatMessage(
+        m.message ?? '', 
+        m.from ?? '', 
+        AnimationController(vsync: this, duration: Duration(milliseconds: 0))..forward()
+      )
+    );
+
+    setState(() {
+      _messages.insertAll(0, history);
+    });
   }
 
   void _listenMessages( dynamic payload) {
@@ -156,7 +173,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
     _textController.clear();
     _focusNode.requestFocus();
-    final newMessage = new ChatMessage(text,'123', AnimationController(vsync: this, duration: Duration(milliseconds: 500)));
+    final newMessage = new ChatMessage(text, authService!.user!.uid ?? '', AnimationController(vsync: this, duration: Duration(milliseconds: 500)));
     _messages.insert(0, newMessage);
     newMessage.animationController.forward();
     setState(() {
@@ -171,7 +188,6 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    //TODO: Off del socket
     for(ChatMessage message in _messages) {
       message.animationController.dispose();
     }

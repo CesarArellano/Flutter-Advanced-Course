@@ -24,9 +24,8 @@ const saveMessage = async( payload ) => {
     }
   */
   try {
-    const message = new Message();
+    const message = new Message(payload);
     await message.save();
-    
     return true;
   } catch (error) {
     return false;
@@ -35,5 +34,6 @@ const saveMessage = async( payload ) => {
 
 module.exports = {
   userConnected,
-  userDisconnected
+  userDisconnected,
+  saveMessage
 }
