@@ -1,23 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:states_app/controllers/user_controller.dart';
+import 'package:states_app/models/user.dart';
 
 class PageOne extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userCtrl = Get.put( UserController() );
     return Scaffold(
       appBar: AppBar(
         title: Text('Page One'),
       ),
-      body: UserInfo(),
+      body: Obx(() => userCtrl.existUser.value
+        ? UserInfo(user: userCtrl.user.value)
+        : NoInfo()
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.chevron_right),
-        onPressed: () => Navigator.pushNamed(context, 'pageTwo')
+        onPressed: () => Get.toNamed('pageTwo', arguments: {
+          'name': 'César',
+          'age': 21
+        })
       ),
     );
   }
 }
 
+class NoInfo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('No user info'),
+    );
+  }
+
+}
+
 class UserInfo extends StatelessWidget {
+  final User user;
+  
+  UserInfo({ required this.user });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,14 +54,12 @@ class UserInfo extends StatelessWidget {
         children: [
           Text('General', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           Divider(),
-          ListTile( title: Text('Name')),
-          ListTile( title: Text('Age')),
+          ListTile( title: Text('Name ${ user.name }')),
+          ListTile( title: Text('Age ${ user.age }')),
           SizedBox(height: 20.0),
           Text('Professions', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           Divider(),
-          ListTile( title: Text('Profession One')),
-          ListTile( title: Text('Profession Two')),
-          ListTile( title: Text('Profession Three')),
+          ...user.professions.map((profession) => ListTile(title: Text(profession)) ).toList()
         ],
       )
     );
