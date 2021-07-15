@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Maps App',
-      initialRoute: 'gps_access',
+      initialRoute: 'loading',
       routes: {
         'loading': (_) => LoadingPage(),
         'gps_access': ( _ ) => GpsAccessPage(),
