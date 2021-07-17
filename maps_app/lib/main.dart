@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:maps_app/bloc/my_location/my_location_bloc.dart';
 
 import 'package:maps_app/pages/gps_access_page.dart';
 import 'package:maps_app/pages/loading_page.dart';
@@ -9,15 +11,20 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Maps App',
-      initialRoute: 'loading',
-      routes: {
-        'loading': (_) => LoadingPage(),
-        'gps_access': ( _ ) => GpsAccessPage(),
-        'map': (_) => MapPage()
-      }
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: ( _ ) => MyLocationBloc() ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Maps App',
+        initialRoute: 'loading',
+        routes: {
+          'loading': (_) => LoadingPage(),
+          'gps_access': ( _ ) => GpsAccessPage(),
+          'map': (_) => MapPage()
+        }
+      ),
     );
   }
 }

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart' as Geolocator;
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:maps_app/helpers/helpers.dart';
 import 'package:maps_app/pages/gps_access_page.dart';
 import 'package:maps_app/pages/map_page.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class LoadingPage extends StatefulWidget {
-
-
-
   @override
   _LoadingPageState createState() => _LoadingPageState();
 }
@@ -37,6 +34,7 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
     }
     super.didChangeAppLifecycleState(state);
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
