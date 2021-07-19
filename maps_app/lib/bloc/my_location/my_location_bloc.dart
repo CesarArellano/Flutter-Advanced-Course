@@ -5,7 +5,6 @@ import 'package:geolocator/geolocator.dart' as Geolocator;
 import 'package:meta/meta.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 part 'my_location_event.dart';
 part 'my_location_state.dart';
 
@@ -19,7 +18,8 @@ class MyLocationBloc extends Bloc<MyLocationEvent, MyLocationState> {
       desiredAccuracy: Geolocator.LocationAccuracy.high,
       distanceFilter: 10,
     ).listen( ( Geolocator.Position position ) {
-      print(position);
+      final newLocation = new LatLng(position.latitude, position.longitude);
+      add(OnLocationChanged(newLocation));
     });
   }
 
@@ -29,6 +29,11 @@ class MyLocationBloc extends Bloc<MyLocationEvent, MyLocationState> {
 
   @override
   Stream<MyLocationState> mapEventToState( MyLocationEvent event ) async* {
-    // TODO: implement mapEventToState
+    if( event is OnLocationChanged ) {
+      yield state.copyWith(
+        existLocation: true,
+        location: event.location
+      );
+    }
   }
 }

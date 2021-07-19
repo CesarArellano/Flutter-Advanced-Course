@@ -74,6 +74,7 @@ class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserv
       case PermissionStatus.permanentlyDenied:
         openAppSettings();
       break;
+      
     }
   }
 }
