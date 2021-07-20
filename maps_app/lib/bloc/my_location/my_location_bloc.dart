@@ -9,7 +9,7 @@ part 'my_location_event.dart';
 part 'my_location_state.dart';
 
 class MyLocationBloc extends Bloc<MyLocationEvent, MyLocationState> {
-  MyLocationBloc() : super(MyLocationState());
+  MyLocationBloc() : super( MyLocationState() );
   
   StreamSubscription<Geolocator.Position>? _positionSubscription;
 
