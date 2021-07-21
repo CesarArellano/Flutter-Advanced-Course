@@ -35,16 +35,20 @@ class _MapPageState extends State<MapPage> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          BtnLocation()
+          BtnLocation(),
+          BtnFollowLocation(),
+          BtnMyRoute(),
         ],
       ),
     );
   }
 
   Widget createMap(MyLocationState state) {
-    if(!state.existLocation) return Center(child: Text('Tracking...'));
+    if( !state.existLocation ) return Center(child: Text('Tracking...'));
 
     final mapBloc = BlocProvider.of<MapBloc>(context);
+
+    mapBloc.add( OnNewLocation(state.location!) );
 
     final cameraPosition = new CameraPosition(
       target: state.location!,
@@ -56,6 +60,13 @@ class _MapPageState extends State<MapPage> {
       myLocationButtonEnabled: false,
       zoomControlsEnabled: false,
       onMapCreated: mapBloc.initMap,
+      polylines: mapBloc.state.polylines.values.toSet(),
+      onCameraMove: ( cameraPosition ) {
+        mapBloc.add( OnMovedMap(cameraPosition.target) );
+      },
+      // onCameraIdle: () { When the moving camera stop it, call this fuction;
+      //   print('Idle Map');
+      // },
     );
   }
 }
