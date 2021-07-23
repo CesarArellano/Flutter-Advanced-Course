@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:maps_app/models/search_destinations_result.dart';
 
-class SearchDestination extends SearchDelegate {
+class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
   @override
   final String searchFieldLabel;
 
@@ -17,8 +18,10 @@ class SearchDestination extends SearchDelegate {
 
   @override
   Widget buildLeading(BuildContext context) {
+    final searchResult = new SearchDestinationsResult(cancel: true);
+
     return IconButton(
-      onPressed: () => this.close(context, null),
+      onPressed: () => this.close(context, searchResult),
       icon: Icon(Icons.arrow_back, color: Colors.black)
     );
   }
@@ -30,6 +33,7 @@ class SearchDestination extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    final searchResult = new SearchDestinationsResult(cancel: false, manually: true);
     return ListView(
       children: <Widget>[
         ListTile(
@@ -37,7 +41,7 @@ class SearchDestination extends SearchDelegate {
           title: Text('Set Location Manually'),
           onTap: () {
             print('Manually');
-            this.close(context, null);
+            this.close(context, searchResult);
           },
         )
       ],
