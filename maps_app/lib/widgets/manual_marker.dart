@@ -63,11 +63,21 @@ class _ManualMarkerBuild extends StatelessWidget {
               elevation: 0,
               splashColor: Colors.transparent,
               shape: StadiumBorder(),
-              onPressed: () {},
+              onPressed: () {
+                this.calculateDestination(context);
+              },
             ),
           ),
         )
       ],
     );
+  }
+
+  void calculateDestination(BuildContext context) async {
+    final trafficService = new TrafficService();
+    final origin = BlocProvider.of<MyLocationBloc>(context).state.location; 
+    final destination = BlocProvider.of<MapBloc>(context).state.centralLocation;
+
+    await trafficService.getStartAndFinalCoords(origin!, destination);
   }
 }

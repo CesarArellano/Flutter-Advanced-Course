@@ -1,10 +1,11 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:animate_do/animate_do.dart';
 
 import 'package:maps_app/bloc/map/map_bloc.dart';
 import 'package:maps_app/bloc/my_location/my_location_bloc.dart';
 import 'package:maps_app/bloc/searching/searching_bloc.dart';
+import 'package:maps_app/bloc/services/traffic_service.dart';
 import 'package:maps_app/models/search_destinations_result.dart';
 import 'package:maps_app/search/search_destination.dart';
 
