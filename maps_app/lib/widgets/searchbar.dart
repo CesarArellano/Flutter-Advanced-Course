@@ -7,7 +7,9 @@ class SearchBar extends StatelessWidget {
     return BlocBuilder<SearchingBloc, SearchingState>(
       builder: ( _, state) {
         if(!state.manualSelection) {
-          return _searchbarBuild(context);
+          return FadeInDown(
+            child: _searchbarBuild(context)
+          );
         } else {
           return Container();
         }
