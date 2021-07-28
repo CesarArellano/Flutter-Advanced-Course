@@ -3,6 +3,24 @@ part of 'widgets.dart';
 class ManualMarker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    return BlocBuilder<SearchingBloc, SearchingState>(
+      builder: ( _, state) {
+        if( state.manualSelection ) {
+          return _ManualMarkerBuild();
+        } else {
+          return Container();
+        }
+      },
+    );
+    
+  }
+}
+
+class _ManualMarkerBuild extends StatelessWidget {
+  
+  @override
+  Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
     return Stack(
@@ -15,9 +33,7 @@ class ManualMarker extends StatelessWidget {
             backgroundColor: Colors.white,
             child: IconButton(
               icon: Icon( Icons.arrow_back, color: Colors.black87),
-              onPressed: () {
-
-              },
+              onPressed: () => BlocProvider.of<SearchingBloc>(context).add(OnDeactivateManualMarker()),
             )
           )
         ),

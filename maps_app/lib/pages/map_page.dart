@@ -30,7 +30,18 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<MyLocationBloc, MyLocationState>(
-        builder: ( _ , state) => createMap(state)
+        builder: ( _ , state) {
+          return Stack(
+            children: <Widget>[
+              createMap(state),
+              ManualMarker(),
+              Positioned(
+                top: 10,
+                child: SearchBar()
+              ),
+            ],
+          );
+        }
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -55,29 +66,19 @@ class _MapPageState extends State<MapPage> {
       zoom: 15
     );
 
-    return Stack(
-      children: [
-        GoogleMap(
-          initialCameraPosition: cameraPosition,
-          myLocationEnabled: true,
-          myLocationButtonEnabled: false,
-          zoomControlsEnabled: false,
-          onMapCreated: mapBloc.initMap,
-          polylines: mapBloc.state.polylines.values.toSet(),
-          // onCameraMove: ( cameraPosition ) {
-          //   mapBloc.add( OnMovedMap(cameraPosition.target) );
-          // },
-          // onCameraIdle: () { When the moving camera stop it, call this fuction;
-          //   print('Idle Map');
-          // },
-        ),
-        ManualMarker(),
-        // Positioned(
-        //   top: 10,
-        //   child: SearchBar()
-        // ),
-        
-      ],
+    return GoogleMap(
+      initialCameraPosition: cameraPosition,
+      myLocationEnabled: true,
+      myLocationButtonEnabled: false,
+      zoomControlsEnabled: false,
+      onMapCreated: mapBloc.initMap,
+      polylines: mapBloc.state.polylines.values.toSet(),
+      // onCameraMove: ( cameraPosition ) {
+      //   mapBloc.add( OnMovedMap(cameraPosition.target) );
+      // },
+      // onCameraIdle: () { When the moving camera stop it, call this fuction;
+      //   print('Idle Map');
+      // },
     );
   }
 }

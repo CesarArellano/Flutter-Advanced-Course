@@ -4,6 +4,19 @@ class SearchBar extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<SearchingBloc, SearchingState>(
+      builder: ( _, state) {
+        if(!state.manualSelection) {
+          return _searchbarBuild(context);
+        } else {
+          return Container();
+        }
+      },
+
+    );
+  }
+  
+  Widget _searchbarBuild(BuildContext context) {
     final size = MediaQuery.of(context).size;
     
     return SafeArea(
@@ -14,7 +27,7 @@ class SearchBar extends StatelessWidget {
         child: GestureDetector(
           onTap: () async {
             final SearchDestinationsResult? result = await showSearch(context: context, delegate: SearchDestination());
-            returnSearching(result!);
+            returnSearching(context, result!);
           },
           child: Container(
             padding: EdgeInsets.all(20),
@@ -49,9 +62,15 @@ class SearchBar extends StatelessWidget {
     );
   }
 
-  void returnSearching(SearchDestinationsResult result ) {
+  void returnSearching(BuildContext context, SearchDestinationsResult result ) {
     if( result.cancel ) return;
+    
+    if( result.manually! ) {
+      BlocProvider.of<SearchingBloc>(context).add(OnActivateManualMarker());
+      return;
+    }
 
     print(result.manually);
   }
+
 }
