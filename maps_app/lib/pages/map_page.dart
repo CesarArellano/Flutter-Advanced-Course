@@ -71,10 +71,12 @@ class _MapPageState extends State<MapPage> {
           //   print('Idle Map');
           // },
         ),
-        Positioned(
-          top: 10,
-          child: SearchBar()
-        )
+        ManualMarker(),
+        // Positioned(
+        //   top: 10,
+        //   child: SearchBar()
+        // ),
+        
       ],
     );
   }
