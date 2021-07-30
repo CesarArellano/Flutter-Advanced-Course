@@ -29,7 +29,8 @@ class SearchBar extends StatelessWidget {
         child: GestureDetector(
           onTap: () async {
             final proximity = BlocProvider.of<MyLocationBloc>(context).state.location;
-            final SearchDestinationsResult? result = await showSearch(context: context, delegate: SearchDestination(proximity!));
+            final history = BlocProvider.of<SearchingBloc>(context).state.history;
+            final SearchDestinationsResult? result = await showSearch(context: context, delegate: SearchDestination(proximity!, history));
             returnSearching(context, result!);
           },
           child: Container(
@@ -65,7 +66,7 @@ class SearchBar extends StatelessWidget {
     );
   }
 
-  void returnSearching(BuildContext context, SearchDestinationsResult result ) {
+  Future<void> returnSearching(BuildContext context, SearchDestinationsResult result ) async {
     if( result.cancel ) return;
     
     if( result.manually! ) {
@@ -73,7 +74,29 @@ class SearchBar extends StatelessWidget {
       return;
     }
 
-    print(result.manually);
+    // Calculate route based in SearchDelegate Value.
+    final _trafficService = TrafficService();
+    final mapBloc = BlocProvider.of<MapBloc>(context);
+    
+    final origin = BlocProvider.of<MyLocationBloc>(context).state.location;
+    final destination = result.position;
+    
+    final drivingResponse = await _trafficService.getStartAndFinalCoords(origin!, destination!);
+    
+    final geometry = drivingResponse.routes![0].geometry;
+    final distance = drivingResponse.routes![0].distance;
+    final duration = drivingResponse.routes![0].duration;
+
+    final points = decodePolyline(geometry!, accuracyExponent: 6);
+    final List<LatLng> routeCoords = points.map(
+      (coords) => LatLng(coords[0].toDouble(), coords[1].toDouble())
+    ).toList();
+    
+    mapBloc.add(OnCreateRouteOriginDestination(routeCoords, distance!, duration!));
+    
+    final searchingBloc = BlocProvider.of<SearchingBloc>(context);
+    searchingBloc.add( OnAddHistory( result ));
+
   }
 
 }

@@ -8,8 +8,9 @@ class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
   final String searchFieldLabel;
   final TrafficService _trafficService;
   final LatLng proximity;
+  final List<SearchDestinationsResult> history;
 
-  SearchDestination( this.proximity ) : 
+  SearchDestination( this.proximity, this.history ) : 
     this.searchFieldLabel = 'Search...',
     this._trafficService = new TrafficService();
 
@@ -36,7 +37,7 @@ class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
   @override
   Widget buildResults(BuildContext context) {
     
-    return _buildingResultsSuggestions();
+    return _buildingResultsSuggestions(context);
   }
 
   @override
@@ -49,19 +50,29 @@ class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
             leading: Icon(Icons.location_on),
             title: Text('Set Location Manually'),
             onTap: () {
-              print('Manually');
               this.close(context, searchResult);
             },
-          )
+          ),
+          ...this.history.map(
+            (place) =>  ListTile(
+              leading: Icon(Icons.history),
+              title: Text(place.destinationName!),
+              subtitle: Text(place.description!),
+              onTap: () {
+                this.close(context, place );
+              },
+            )
+          ).toList()
+
         ],
       );
     }
 
-    return this._buildingResultsSuggestions();
+    return this._buildingResultsSuggestions(context);
     
   }
 
-  Widget _buildingResultsSuggestions() {
+  Widget _buildingResultsSuggestions(BuildContext context) {
     
     if ( this.query.length == 0) {
       return Container();
@@ -93,7 +104,14 @@ class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
               title: Text(place['text_es']),
               subtitle: Text( place['place_name_es'] ),
               onTap: () {
-                print(place);
+                this.close(context, SearchDestinationsResult(
+                    cancel: false, 
+                    manually: false,
+                    position: LatLng(place['center'][1], place['center'][0]),
+                    destinationName: place['text_es'],
+                    description: place['place_name_es']
+                  )
+                );
               },
             );
           }
