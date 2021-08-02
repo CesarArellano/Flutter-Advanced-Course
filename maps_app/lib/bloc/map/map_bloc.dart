@@ -103,9 +103,26 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
     final currentPolylines = state.polylines;
     currentPolylines['my_destination_route'] = this._myDestinationRoute;
+    
+    final coordsList = event.routeCoords;
+    // Markers
+    final originMarker = new Marker(
+      markerId: MarkerId('origin'),
+      position: coordsList[0]
+    );
+
+    final destinationMarker = new Marker(
+      markerId: MarkerId('destination'),
+      position: coordsList[coordsList.length - 1]
+    );
+
+    final newMarkers = { ...state.markers };
+    newMarkers['origin'] = originMarker;
+    newMarkers['destination'] = destinationMarker;
 
     yield state.copyWith(
-      polylines: currentPolylines
+      polylines: currentPolylines,
+      markers: newMarkers
     );
   }
 }
