@@ -108,12 +108,17 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     // Markers
     final originMarker = new Marker(
       markerId: MarkerId('origin'),
-      position: coordsList[0]
+      position: coordsList[0],
+      infoWindow: InfoWindow(
+        title: 'My Home',
+        snippet: 'This is the origin'
+      )
     );
 
     final destinationMarker = new Marker(
       markerId: MarkerId('destination'),
-      position: coordsList[coordsList.length - 1]
+      position: coordsList[coordsList.length - 1],
+      
     );
 
     final newMarkers = { ...state.markers };
