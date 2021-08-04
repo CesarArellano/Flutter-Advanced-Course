@@ -83,6 +83,8 @@ class _ManualMarkerBuild extends StatelessWidget {
     final origin = BlocProvider.of<MyLocationBloc>(context).state.location; 
     final destination = BlocProvider.of<MapBloc>(context).state.centralLocation;
 
+    trafficService.getCoordsInfo(destination);
+    
     final trafficResponse = await trafficService.getStartAndFinalCoords(origin!, destination);
 
     final geometry = trafficResponse.routes![0].geometry;
