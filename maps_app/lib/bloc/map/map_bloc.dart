@@ -134,7 +134,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     newMarkers['destination'] = destinationMarker;
 
     Future.delayed(Duration(milliseconds: 300)).then(
-      (value) => mapController!.showMarkerInfoWindow(MarkerId('origin')),
+      (value) => mapController!.showMarkerInfoWindow(MarkerId('destination')),
     );
 
     yield state.copyWith(
