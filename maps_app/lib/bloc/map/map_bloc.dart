@@ -110,20 +110,32 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       markerId: MarkerId('origin'),
       position: coordsList[0],
       infoWindow: InfoWindow(
-        title: 'My Home',
-        snippet: 'This is the origin'
+        title: 'My Location',
+        snippet: 'Tour duration: ${ (event.duration / 60).floor() } minutes'
       )
     );
+
+    double distanceKm = event.distance / 1000;
+    distanceKm = (distanceKm * 100).floor().toDouble();
+    distanceKm = distanceKm / 100;
 
     final destinationMarker = new Marker(
       markerId: MarkerId('destination'),
       position: coordsList[coordsList.length - 1],
+      infoWindow: InfoWindow(
+        title: event.destinationName,
+        snippet: 'Distance: ${ distanceKm } km'
+      )
       
     );
 
     final newMarkers = { ...state.markers };
     newMarkers['origin'] = originMarker;
     newMarkers['destination'] = destinationMarker;
+
+    Future.delayed(Duration(milliseconds: 300)).then(
+      (value) => mapController!.showMarkerInfoWindow(MarkerId('origin')),
+    );
 
     yield state.copyWith(
       polylines: currentPolylines,
