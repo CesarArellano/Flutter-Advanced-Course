@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Maps App',
-        initialRoute: 'test_marker',
+        initialRoute: 'loading',
         routes: {
           'loading': (_) => LoadingPage(),
           'gps_access': ( _ ) => GpsAccessPage(),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:maps_app/custom_markers/destination_marker.dart';
 
-import 'package:maps_app/custom_markers/origin_marker.dart';
+import 'package:maps_app/custom_markers/custom_markers.dart';
 
 class TestMarkerPage extends StatelessWidget {
 

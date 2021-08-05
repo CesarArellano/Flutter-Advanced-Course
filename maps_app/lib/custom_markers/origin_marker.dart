@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of 'custom_markers.dart';
 
 class OriginMarkerPainter extends CustomPainter {
 
@@ -85,7 +85,7 @@ class OriginMarkerPainter extends CustomPainter {
 
     textSpan = new TextSpan(
       text: 'My location',
-      style: TextStyle(color: Colors.black, fontSize: 22, fontWeight: FontWeight.w400 ),
+      style: TextStyle(color: Colors.black, fontSize: 32, fontWeight: FontWeight.w400 ),
     );
 
     textPainter = new TextPainter(
@@ -96,7 +96,7 @@ class OriginMarkerPainter extends CustomPainter {
       maxWidth: size.width - 130
     );
 
-    textPainter.paint(canvas, Offset(130, 50));
+    textPainter.paint(canvas, Offset(130, 45));
 
   }
 

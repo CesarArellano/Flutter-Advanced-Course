@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart' show Colors;
+import 'package:flutter/material.dart' show Colors, Offset;
 import 'package:bloc/bloc.dart';
 import 'package:maps_app/helpers/helpers.dart';
 import 'package:meta/meta.dart';
@@ -108,14 +108,17 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final coordsList = event.routeCoords;
     
     // Custom Icons
-    final originIcon = await getAssetImageMarker();
-    final destinationIcon = await getNetworkImageMarker();
+    // final originIcon = await getAssetImageMarker();
+    final originIcon = await getMarkerOriginIcon( event.duration.toInt() );
+    // final destinationIcon = await getNetworkImageMarker();
+    final destinationIcon = await getMarkerDestinationIcon(event.destinationName, event.distance);
 
     // Markers
     final originMarker = new Marker(
       markerId: MarkerId('origin'),
       position: coordsList[0],
-      icon: originIcon,
+      icon: originIcon,  
+      anchor: Offset(0.0, 1.0),
       infoWindow: InfoWindow(
         title: 'My Location',
         snippet: 'Tour duration: ${ (event.duration / 60).floor() } minutes'
@@ -130,6 +133,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       markerId: MarkerId('destination'),
       position: coordsList[coordsList.length - 1],
       icon: destinationIcon,
+      anchor: Offset(0.1, 0.95),
       infoWindow: InfoWindow(
         title: event.destinationName,
         snippet: 'Distance: ${ distanceKm } km'
