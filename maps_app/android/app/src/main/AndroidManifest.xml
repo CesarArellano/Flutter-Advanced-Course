@@ -13,7 +13,7 @@
   <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
   <application
         android:label="maps_app"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCmuOxccw07YKpadAfrv9E7HVbUkW08xLE"/>
         <activity

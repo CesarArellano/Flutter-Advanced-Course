@@ -36,10 +36,20 @@ dependencies:
   animate_do: ^2.0.0
   flutter_svg: ^0.22.0
   google_polyline_algorithm: ^3.1.0
+  flutter_launcher_icons: ^0.9.1
+  flutter_native_splash: ^1.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_native_splash:
+  color: "#1F1F1F"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/map-icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
