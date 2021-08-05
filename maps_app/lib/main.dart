@@ -10,6 +10,7 @@ import 'package:maps_app/bloc/searching/searching_bloc.dart';
 import 'package:maps_app/pages/gps_access_page.dart';
 import 'package:maps_app/pages/loading_page.dart';
 import 'package:maps_app/pages/map_page.dart';
+import 'package:maps_app/pages/test_marker_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -25,11 +26,12 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Maps App',
-        initialRoute: 'loading',
+        initialRoute: 'test_marker',
         routes: {
           'loading': (_) => LoadingPage(),
           'gps_access': ( _ ) => GpsAccessPage(),
-          'map': (_) => MapPage()
+          'map': (_) => MapPage(),
+          'test_marker': ( _ ) => TestMarkerPage(),
         }
       ),
     );
