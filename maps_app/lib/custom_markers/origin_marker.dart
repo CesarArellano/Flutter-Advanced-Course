@@ -67,7 +67,7 @@ class OriginMarkerPainter extends CustomPainter {
     // My location
     textSpan = new TextSpan(
       text: 'Min',
-      style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w400 ),
+      style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400 ),
     );
 
     textPainter = new TextPainter(
@@ -85,7 +85,7 @@ class OriginMarkerPainter extends CustomPainter {
 
     textSpan = new TextSpan(
       text: 'My location',
-      style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w400 ),
+      style: TextStyle(color: Colors.black, fontSize: 22, fontWeight: FontWeight.w400 ),
     );
 
     textPainter = new TextPainter(
@@ -96,7 +96,7 @@ class OriginMarkerPainter extends CustomPainter {
       maxWidth: size.width - 130
     );
 
-    textPainter.paint(canvas, Offset(150, 50));
+    textPainter.paint(canvas, Offset(130, 50));
 
   }
 
