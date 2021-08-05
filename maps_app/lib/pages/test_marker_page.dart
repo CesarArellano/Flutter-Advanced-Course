@@ -13,7 +13,7 @@ class TestMarkerPage extends StatelessWidget {
           height: 150,
           color: Colors.green,
           child: CustomPaint(
-            painter: OriginMarkerPainter(),
+            painter: OriginMarkerPainter(15),
           ),
         )
       ),
