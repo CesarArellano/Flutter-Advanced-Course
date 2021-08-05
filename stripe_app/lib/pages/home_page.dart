@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:stripe_app/data/cards.dart';
+import 'package:stripe_app/helpers/helpers.dart';
+import 'package:stripe_app/pages/card_page.dart';
 import 'package:stripe_app/widgets/total_pay_button.dart';
 
 
@@ -37,7 +39,7 @@ class HomePage extends StatelessWidget {
 
                 return GestureDetector(
                   onTap: () {
-                    print(card.brand);
+                    Navigator.push(context, navigateFadeIn(context, CardPage()));
                   },
                   child: CreditCardWidget(
                     cardNumber: card.cardNumber, 
