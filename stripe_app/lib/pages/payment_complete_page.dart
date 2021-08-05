@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class PaymentCompletePage extends StatelessWidget {
 
   @override

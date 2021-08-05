@@ -41,13 +41,15 @@ class HomePage extends StatelessWidget {
                   onTap: () {
                     Navigator.push(context, navigateFadeIn(context, CardPage()));
                   },
-                  child: CreditCardWidget(
-                    cardNumber: card.cardNumber, 
-                    expiryDate: card.expiracyDate, 
-                    cardHolderName: card.cardHolderName, 
-                    cvvCode: card.cvv, 
-                    showBackView: false,
-                    
+                  child: Hero(
+                    tag: card.cardNumber,
+                    child: CreditCardWidget(
+                      cardNumber: card.cardNumber, 
+                      expiryDate: card.expiracyDate, 
+                      cardHolderName: card.cardHolderName, 
+                      cvvCode: card.cvv, 
+                      showBackView: false,  
+                    ),
                   ),
                 );
               },
