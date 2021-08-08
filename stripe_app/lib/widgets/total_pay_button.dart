@@ -77,7 +77,24 @@ class _BtnPay extends StatelessWidget {
           Text('Pay', style: TextStyle(color: Colors.white, fontSize: 22)),
         ],
       ),
-      onPressed: () {
+      onPressed: () async {
+        showLoading(context);
+
+        final payBlocState = BlocProvider.of<PayBloc>(context).state;
+        final stripeService = new StripeService();
+
+        final resp = await stripeService.payApplePayGooglePay(
+          amount: payBlocState.paymentAmountString, 
+          currency: payBlocState.currency
+        );
+
+        Navigator.pop(context);
+
+        if( resp.ok ) {
+          showAlert( context, 'Tarjeta Ok', 'Todo correcto' );
+        } else {
+          showAlert( context, 'Algo salió mal', resp.msg );
+        }
         
       },
     );
@@ -117,7 +134,7 @@ class _BtnPay extends StatelessWidget {
         );
 
         Navigator.pop(context);
-        
+
         if( resp.ok ) {
           showAlert( context, 'Tarjeta Ok', 'Todo correcto' );
         } else {

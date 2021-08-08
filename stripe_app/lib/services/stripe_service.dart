@@ -81,10 +81,54 @@ class StripeService {
     }
   }
 
-  Future payApplePayGooglePay({
+  Future<StripeCustomResponse> payApplePayGooglePay({
     required String amount,
     required String currency,
   }) async {
+
+    try {
+
+      final newAmount = double.parse(amount) / 100;
+      
+      final token = await StripePayment.paymentRequestWithNativePay(
+        androidPayOptions: AndroidPayPaymentRequest(
+          totalPrice: amount,
+          currencyCode: currency,  
+        ), 
+        applePayOptions: ApplePayPaymentOptions(
+          countryCode: 'US',
+          currencyCode: currency,
+          items: <ApplePayItem>[
+            ApplePayItem(
+              label: 'Súper Producto 1',
+              amount: '$newAmount',
+            )
+          ]
+        )
+      );
+
+      final paymentMethod = await StripePayment.createPaymentMethod(
+        PaymentMethodRequest(
+          card: CreditCard(
+            cardId: token.tokenId
+          )
+        )
+      );
+
+      final resp = await this._makePayment(
+        amount: amount,
+        currency: currency,
+        paymentMethod: paymentMethod
+      );
+
+      await StripePayment.completeNativePayRequest();
+      
+      return resp;
+
+    } catch (e) {
+      print('Error: ${ e.toString() }');
+      return StripeCustomResponse(ok: false, msg: 'Falló pago: ${ e.toString() }');
+    }
 
   }
 
@@ -92,6 +136,7 @@ class StripeService {
     required String amount,
     required String currency,
   }) async {
+
     try {
       final dio = new Dio();
       
@@ -112,9 +157,10 @@ class StripeService {
       print('Error: ${ e.toString() }');
       return PaymentIntentResponse(status: '400');
     }
+
   }
 
-  Future _makePayment({
+  Future<StripeCustomResponse> _makePayment({
     required String amount,
     required String currency,
     required PaymentMethod paymentMethod
@@ -143,7 +189,7 @@ class StripeService {
       
     } catch (e) {
       print('Error: ${ e.toString() }');
-      return PaymentIntentResponse(status: '400');
+      return StripeCustomResponse(ok: false, msg: 'Falló pago: ${ e.toString() }');
     }
   }
 
