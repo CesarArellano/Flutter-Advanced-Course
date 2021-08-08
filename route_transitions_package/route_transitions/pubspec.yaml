@@ -1,7 +1,7 @@
-name: route_transitions
-description: A new Flutter package project.
-version: 0.0.1
-homepage:
+name: custom_page_transitions
+description: This package helps to handle the animations of the screen transitions in an elegant and simple way.
+version: 0.0.4
+homepage: https://cesararellano.github.io/Personal-Portfolio/
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

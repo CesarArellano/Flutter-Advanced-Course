@@ -13,7 +13,7 @@ enum AnimationType {
   zoomIn,
 }
 
-class RouteTransitions {
+class PageTransitions {
   
   final BuildContext context;
   final Widget child;
@@ -25,7 +25,7 @@ class RouteTransitions {
   final bool fullscreenDialog;
   final Curve curve;
   
-  RouteTransitions({
+  PageTransitions({
     required this.context, 
     required this.child,
     this.animation = AnimationType.material,
