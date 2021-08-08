@@ -1,7 +1,7 @@
 import 'package:custom_transition_route/pages/page2.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:custom_transition_route/helpers/route_transitions.dart';
 
 class Page1 extends StatelessWidget {
 
@@ -19,7 +19,10 @@ class Page1 extends StatelessWidget {
           color: Colors.white,
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           onPressed: () {
-            Navigator.push(context, CupertinoPageRoute(builder: ( _ ) => Page2() ));
+            RouteTransitions(
+              context: context,
+              child: Page2(),
+            );
           },
         )
       ),
