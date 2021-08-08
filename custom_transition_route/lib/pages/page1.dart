@@ -22,6 +22,11 @@ class Page1 extends StatelessWidget {
             RouteTransitions(
               context: context,
               child: Page2(),
+              animation: AnimationType.slideLeft,
+              duration: Duration( milliseconds:  400 ),
+              reverseDuration: Duration( milliseconds:  400),
+              curve: Curves.decelerate,
+              fullscreenDialog: true,
             );
           },
         )

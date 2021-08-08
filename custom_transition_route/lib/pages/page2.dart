@@ -5,6 +5,8 @@ class Page2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments;
+    print(args);
     return Scaffold(
       appBar: AppBar(
         title: Text('Page 2'),
