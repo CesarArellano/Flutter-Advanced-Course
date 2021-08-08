@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:stripe_app/models/credit_card.dart';
+import 'package:stripe_app/models/app_credit_card.dart';
 
 part 'pay_event.dart';
 part 'pay_state.dart';

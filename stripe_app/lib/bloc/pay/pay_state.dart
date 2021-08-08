@@ -5,7 +5,7 @@ class PayState {
   final double paymentAmount;
   final String currency;
   final bool activeCard;
-  final CreditCard? card;
+  final AppCreditCard? card;
 
   PayState({
     this.paymentAmount = 375.55,
@@ -18,7 +18,7 @@ class PayState {
     double? paymentAmount,
     String? currency,
     bool? activeCard,
-    CreditCard? card, 
+    AppCreditCard? card, 
   }) => PayState(
     paymentAmount : paymentAmount ?? this.paymentAmount,
     currency      : currency ?? this.currency,

@@ -4,7 +4,7 @@ part of 'pay_bloc.dart';
 abstract class PayEvent {}
 
 class OnSelectedCard extends PayEvent {
-  final CreditCard card;
+  final AppCreditCard card;
 
   OnSelectedCard(this.card);
 

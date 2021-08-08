@@ -1,4 +1,4 @@
-class CreditCard {
+class AppCreditCard {
   final String cardNumberHidden;
   final String cardNumber;
   final String brand;
@@ -6,7 +6,7 @@ class CreditCard {
   final String expiracyDate;
   final String cardHolderName;
 
-  CreditCard({
+  AppCreditCard({
     required this.cardNumberHidden,
     required this.cardNumber,
     required this.brand,
