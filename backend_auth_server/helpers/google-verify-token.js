@@ -18,6 +18,8 @@ const validateGoogleIdToken = async ( token ) => {
 
     const payload = ticket.getPayload();
     
+    console.log(payload);
+
     return {
       name: payload['name'],
       picture: payload['picture'],
