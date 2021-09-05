@@ -10,6 +10,8 @@ class GoogleSignInService {
   static Future signInWithGoogle() async {
     try {
       final account = await _googleSignIn.signIn();
+      final googleKey = await account!.authentication;
+      print(googleKey.idToken);
       print(account);
       return account;
     } catch (e) {
