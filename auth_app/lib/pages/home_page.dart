@@ -44,8 +44,9 @@ class HomePage extends StatelessWidget {
                     Text('Sign in with Google', style: TextStyle(color: Colors.white, fontSize: 17)),
                   ],
                 ),
-                onPressed: () {
-                  GoogleSignInService.signInWithGoogle();
+                onPressed: () async {
+                  final account = await GoogleSignInService.signInWithGoogle();
+                  print(account?.googleUser?.name);
                 },
               )
             ],
