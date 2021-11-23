@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:auth_app/services/google_signin_service.dart';
+
+import 'package:auth_app/pages/view_profile_screen.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
@@ -11,16 +16,6 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         title: Text('AuthApp Google - Apple'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              GoogleSignInService.signOut();
-            },
-            icon: Icon( FontAwesomeIcons.doorOpen ),
-            splashRadius: 26,
-          ),  
-          SizedBox(width: 10),
-        ],
       ),
       body: Container(
         padding: EdgeInsets.all(10),
@@ -53,7 +48,16 @@ class HomePage extends StatelessWidget {
                         content: Text('Error al autenticar usuario.'),
                       )
                     );
+                    return;
                   }
+                  
+                  Navigator.push(
+                    context, 
+                    CupertinoPageRoute(
+                      builder: (_) => ViewProfileScreen(),
+                      settings: RouteSettings(arguments: account)
+                    )
+                  );
                 },
               )
             ],
