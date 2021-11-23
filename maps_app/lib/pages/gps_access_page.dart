@@ -44,7 +44,7 @@ class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserv
             Text('You need a GPS permission to use this app', style: TextStyle(fontSize: 16.0),),
             SizedBox(height: 20),
             Container(
-              width: 150,
+              width: 160,
               height: 45,
               child: MaterialButton(
                 child: Text('Request access', style: TextStyle( color: Colors.white, fontSize: 16.0),),
