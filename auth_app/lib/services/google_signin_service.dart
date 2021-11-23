@@ -31,10 +31,13 @@ class GoogleSignInService {
 
       final Map<String, dynamic> decodedData = jsonDecode(resp.body);
 
+      print(decodedData);
+
       if( decodedData.containsKey('ok') ) {
         final decode = UserResponse.fromJson(decodedData);
         return decode.ok! ? decode : null;
       }
+
       return null;
     } catch (e) {
       print(e);

@@ -46,7 +46,14 @@ class HomePage extends StatelessWidget {
                 ),
                 onPressed: () async {
                   final account = await GoogleSignInService.signInWithGoogle();
-                  print(account?.googleUser?.name);
+                  if( account == null ) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text('Error al autenticar usuario.'),
+                      )
+                    );
+                  }
                 },
               )
             ],

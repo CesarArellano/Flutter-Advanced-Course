@@ -13,6 +13,7 @@ const validateGoogleIdToken = async ( token ) => {
         CLIENT_ID, // Web
         '41568276934-016cpra08r2o1qg1vdf90da905md30ad.apps.googleusercontent.com', // Android
         '41568276934-rj954pkdtls91jh7n0vg7l601518ov26.apps.googleusercontent.com',
+        '41568276934-40i0oavfn6kphn1ia0fkh983d3g76gjo.apps.googleusercontent.com' // iOS
       ]
     });
 
