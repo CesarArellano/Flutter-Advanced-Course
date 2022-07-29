@@ -1,12 +1,12 @@
-import 'package:chat_app/services/chat_service.dart';
-import 'package:chat_app/services/socket_service.dart';
-import 'package:chat_app/services/users_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
-import 'package:chat_app/services/auth_service.dart';
-import 'package:chat_app/models/user_model.dart';
+import '../models/user_model.dart';
+import '../services/auth_service.dart';
+import '../services/chat_service.dart';
+import '../services/socket_service.dart';
+import '../services/users_services.dart';
 
 class UsersPage extends StatefulWidget {
 
