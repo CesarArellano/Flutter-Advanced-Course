@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:auth_app/models/user_response.dart';
-import 'package:auth_app/services/google_signin_service.dart';
+import '../models/user_response.dart';
+import '../services/google_signin_service.dart';
 
 
 class ViewProfileScreen extends StatelessWidget {
+  const ViewProfileScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +15,18 @@ class ViewProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Text('View Profile'),
+        title: const Text('View Profile'),
         
         actions: [
           IconButton(
             onPressed: () => _signOut(context),
-            icon: Icon( FontAwesomeIcons.doorOpen ),
+            icon: const Icon( FontAwesomeIcons.doorOpen ),
             splashRadius: 25,
           ),  
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
         ],
         leading: IconButton( 
-          icon: Icon(Icons.chevron_left),
+          icon: const Icon(Icons.chevron_left),
           onPressed: () => _signOut(context),
           splashRadius: 25,
         ),
@@ -40,7 +41,7 @@ class ViewProfileScreen extends StatelessWidget {
                 userResponse.googleUser!.picture!,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text('Username: ${ userResponse.googleUser?.name }'),
             Text('Email: ${ userResponse.googleUser?.email }'),
           ],

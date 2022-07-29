@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.authApp</string>
+	<string>com.cesararellano.authApp</string>
 	<key>PROJECT_ID</key>
 	<string>flutter-signin-d6bb3</string>
 	<key>STORAGE_BUCKET</key>
