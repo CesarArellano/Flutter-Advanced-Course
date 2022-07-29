@@ -1,19 +1,19 @@
-import 'package:chat_app/global/environment.dart';
-import 'package:chat_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import '../global/environment.dart';
+import 'auth_service.dart';
 
-enum ServerStatus { Online, Offline, Connecting }
+enum ServerStatus { online, offline, connecting }
 
 class SocketService with ChangeNotifier {
-  ServerStatus _serverStatus = ServerStatus.Connecting;
-  IO.Socket? _socket;
+  ServerStatus _serverStatus = ServerStatus.connecting;
+  io.Socket? _socket;
   
-  ServerStatus get serverStatus => this._serverStatus;
+  ServerStatus get serverStatus => _serverStatus;
 
-  IO.Socket? get socket => this._socket;
-  Function get emit => this._socket!.emit;
+  io.Socket? get socket => _socket;
+  Function get emit => _socket!.emit;
 
   void connect() async {
     final token = await AuthService.getToken();
@@ -21,9 +21,9 @@ class SocketService with ChangeNotifier {
     // Dart client
     String socketUrl = Environment.socketUrl;
 
-    this._socket = IO.io(
+    _socket = io.io(
       socketUrl,
-      IO.OptionBuilder()
+      io.OptionBuilder()
         .setTransports(['websocket']) // for Flutter or Dart VM
         .enableAutoConnect()
         .enableForceNew()
@@ -34,19 +34,19 @@ class SocketService with ChangeNotifier {
     );
 
     // Status Online
-    this._socket!.onConnect((_) {
-      this._serverStatus = ServerStatus.Online;
+    _socket!.onConnect((_) {
+      _serverStatus = ServerStatus.online;
       notifyListeners();
     });
 
    // Status Offline
-    this._socket!.onDisconnect((_) {
-      this._serverStatus = ServerStatus.Offline;
+    _socket!.onDisconnect((_) {
+      _serverStatus = ServerStatus.offline;
       notifyListeners();
     });
   }
 
   void disconnect() {
-    this._socket!.disconnect();
+    _socket!.disconnect();
   }
 }

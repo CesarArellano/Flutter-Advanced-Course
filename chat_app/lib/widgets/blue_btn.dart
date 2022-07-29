@@ -4,25 +4,26 @@ class BlueBtn extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
 
-  BlueBtn({
-    @required this.onPressed,
+  const BlueBtn({
+    Key? key,
+    required this.onPressed,
     this.text = 'Ingresar',
-  });
+  }): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: this.onPressed,
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         elevation: 2, 
-        shape: StadiumBorder(),
-        animationDuration: Duration(milliseconds: 300)
+        shape: const StadiumBorder(),
+        animationDuration: const Duration(milliseconds: 300)
       ),  
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         height: 50,
         child: Center(
-          child: Text(this.text, style: TextStyle(fontSize: 16.0))
+          child: Text(text, style: const TextStyle(fontSize: 16.0))
         )
       )
     );

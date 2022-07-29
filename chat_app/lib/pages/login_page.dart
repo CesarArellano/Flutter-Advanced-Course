@@ -1,27 +1,29 @@
-import 'package:chat_app/helpers/show_alert.dart';
-import 'package:chat_app/services/auth_service.dart';
-import 'package:chat_app/services/socket_service.dart';
-import 'package:chat_app/widgets/blue_btn.dart';
 import 'package:flutter/material.dart';
-
-import 'package:chat_app/widgets/logo.dart';
-import 'package:chat_app/widgets/labels.dart';
-import 'package:chat_app/widgets/custom_input.dart';
 import 'package:provider/provider.dart';
 
+import '../helpers/show_alert.dart';
+import '../services/auth_service.dart';
+import '../services/socket_service.dart';
+import '../widgets/blue_btn.dart';
+import '../widgets/custom_input.dart';
+import '../widgets/labels.dart';
+import '../widgets/logo.dart';
+
 class LoginPage extends StatelessWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: <Widget>[
-              Logo(),
+              const Logo(),
               _Form(),
-              Labels(),
+              const Labels(),
               _TermsAndConditions(),
             ],
           ),
@@ -38,13 +40,13 @@ class _TermsAndConditions extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 60),
-          child: Text(
+          margin: const EdgeInsets.only(top: 60),
+          child: const Text(
             'Términos y condiciones de uso', 
             style: TextStyle(fontWeight: FontWeight.w300)
           ),
         ),
-        SizedBox(height: 40.0)
+        const SizedBox(height: 40.0)
       ],
     );
   }
@@ -56,16 +58,16 @@ class _Form extends StatefulWidget {
 }
 
 class __FormState extends State<_Form> {
-  final emailController = new TextEditingController();
-  final passController = new TextEditingController();
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     final socketService = Provider.of<SocketService>(context);
     
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 50.0),
-      padding: EdgeInsets.symmetric(horizontal: 50.0),
+      margin: const EdgeInsets.symmetric(vertical: 50.0),
+      padding: const EdgeInsets.symmetric(horizontal: 50.0),
       child: Column(
         children: <Widget> [
           CustomInput(
@@ -87,6 +89,9 @@ class __FormState extends State<_Form> {
             : () async {
               FocusScope.of(context).unfocus();
               final loginOk = await authService.login(emailController.text, passController.text);
+              
+              if( !mounted ) return;
+              
               if (loginOk) {
                 socketService.connect();
                 Navigator.pushReplacementNamed(context, 'users');

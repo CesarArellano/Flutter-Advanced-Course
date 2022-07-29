@@ -9,21 +9,23 @@ import '../services/socket_service.dart';
 import '../services/users_services.dart';
 
 class UsersPage extends StatefulWidget {
+  const UsersPage({Key? key}) : super(key: key);
+
 
   @override
-  _UsersPageState createState() => _UsersPageState();
+  State<UsersPage> createState() => _UsersPageState();
 }
 
 class _UsersPageState extends State<UsersPage> {
-  final usersService = new UsersService();
+  final usersService = UsersService();
 
-  RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
   
   List<User> users = [];
 
   @override
   void initState() {
-    this._loadUsers();
+    _loadUsers();
     super.initState();
   }
 
@@ -36,7 +38,7 @@ class _UsersPageState extends State<UsersPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(user!.name, style: TextStyle(color: Colors.black87)),
+        title: Text(user!.name, style: const TextStyle(color: Colors.black87)),
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -45,14 +47,14 @@ class _UsersPageState extends State<UsersPage> {
             Navigator.pushReplacementNamed(context, 'login');
             AuthService.deleteToken();
           }, 
-          icon: Icon(Icons.exit_to_app, color: Colors.black87)
+          icon: const Icon(Icons.exit_to_app, color: Colors.black87)
         ),
         actions: [
           Container(
-            margin: EdgeInsets.only(right: 10.0),
-            child: (socketService.serverStatus == ServerStatus.Online)
+            margin: const EdgeInsets.only(right: 10.0),
+            child: (socketService.serverStatus == ServerStatus.online)
             ? Icon(Icons.check_circle, color: Colors.blue[400])
-            : Icon(Icons.wifi_lock, color: Colors.red)
+            : const Icon(Icons.wifi_lock, color: Colors.red)
           )
         ],
       ),
@@ -71,10 +73,10 @@ class _UsersPageState extends State<UsersPage> {
 
   ListView _usersListView() {
     return ListView.separated(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       itemCount: users.length,
       itemBuilder: (_, i) => _usersListTitle(users[i]),
-      separatorBuilder: (_, i) => Divider(),
+      separatorBuilder: (_, i) => const Divider(),
     );
   }
 
@@ -88,8 +90,8 @@ class _UsersPageState extends State<UsersPage> {
         title: Text(user.name),
         subtitle: Text(user.email ?? 'No Email'),
         leading: CircleAvatar(
-          child: Text(user.name.substring(0,2)),
           backgroundColor: Colors.blue[100],
+          child: Text(user.name.substring(0,2)),
         ),
         trailing: Container(
           width: 10,

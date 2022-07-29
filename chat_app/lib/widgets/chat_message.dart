@@ -1,13 +1,19 @@
-import 'package:chat_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../services/auth_service.dart';
 
 class ChatMessage extends StatelessWidget {
   final String text;
   final String uid;
   final AnimationController animationController;
   
-  ChatMessage(this.text, this.uid, this.animationController);
+  const ChatMessage({
+    Key? key,
+    required this.text, 
+    required this.uid, 
+    required this.animationController,
+  }): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,7 @@ class ChatMessage extends StatelessWidget {
       child: SizeTransition(
         sizeFactor: CurvedAnimation(parent: animationController, curve: Curves.fastLinearToSlowEaseIn),
         child: Container(
-          child: (this.uid == authService.user!.uid)
+          child: (uid == authService.user!.uid)
           ? _myMessage()
           : _notMyMessage()
         ),
@@ -30,17 +36,17 @@ class ChatMessage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerRight,
       child: Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.only(
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(
           right: 5,
           left: 50,
           bottom: 10
         ),
-        child: Text(this.text, style: TextStyle(color: Colors.white),),
         decoration: BoxDecoration(
-          color: Color(0xff4D9EF6),
+          color: const Color(0xff4D9EF6),
           borderRadius: BorderRadius.circular(20)
         ),
+        child: Text(text, style: const TextStyle(color: Colors.white),),
       )
     );
   }
@@ -49,17 +55,17 @@ class ChatMessage extends StatelessWidget {
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
-        padding: EdgeInsets.all(10),
-        margin: EdgeInsets.only(
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(
           left: 5,
           right: 50,
           bottom: 10
         ),
-        child: Text(this.text, style: TextStyle(color: Colors.black87),),
         decoration: BoxDecoration(
-          color: Color(0xffE4E5E8),
+          color: const Color(0xffE4E5E8),
           borderRadius: BorderRadius.circular(20)
         ),
+        child: Text(text, style: const TextStyle(color: Colors.black87),),
       )
     );
   }

@@ -1,42 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
-import 'package:socket_io_client/socket_io_client.dart' as IO;
-
-enum ServerStatus { Online, Offline, Connecting }
+enum ServerStatus { online, offline, connecting }
 
 class SocketService with ChangeNotifier {
-  ServerStatus _serverStatus = ServerStatus.Connecting;
-  IO.Socket _socket;
+  ServerStatus _serverStatus = ServerStatus.connecting;
+  late io.Socket _socket;
   
-  ServerStatus get serverStatus => this._serverStatus;
+  ServerStatus get serverStatus => _serverStatus;
 
-  IO.Socket get socket => this._socket;
-  Function get emit => this._socket.emit;
+  io.Socket get socket => _socket;
+  Function get emit => _socket.emit;
 
   SocketService() {
-    this._initConfig();
+    _initConfig();
   }
 
   void _initConfig() {
     String urlSocket = 'https://flutter-socket-server-cesar.herokuapp.com/';
 
-    this._socket = IO.io(
+    _socket = io.io(
       urlSocket,
-      IO.OptionBuilder()
+      io.OptionBuilder()
         .setTransports(['websocket']) // for Flutter or Dart VM
         .enableAutoConnect()
         .build()
     );
 
     // Status Online
-    this._socket.onConnect((_) {
-      this._serverStatus = ServerStatus.Online;
+    _socket.onConnect((_) {
+      _serverStatus = ServerStatus.online;
       notifyListeners();
     });
 
    // Status Offline
-    this._socket.onDisconnect((_) {
-      this._serverStatus = ServerStatus.Offline;
+    _socket.onDisconnect((_) {
+      _serverStatus = ServerStatus.offline;
       notifyListeners();
     });
   }

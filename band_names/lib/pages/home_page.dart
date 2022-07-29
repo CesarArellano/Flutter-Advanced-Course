@@ -1,17 +1,20 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
-import 'package:band_names/services/socket_service.dart';
-import 'package:band_names/models/band_model.dart';
+import '../extensions/null_extensions.dart';
+import '../models/band_model.dart';
+import '../services/socket_service.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -44,15 +47,15 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Band Names'),
+        title: const Text('Band Names'),
         backgroundColor: Colors.green,
         elevation: 1,
         actions: <Widget>[
           Container(
-            margin: EdgeInsets.only(right: 10),
-            child: (socketService.serverStatus == ServerStatus.Online)
-              ? Icon(Icons.check_circle)
-              : Icon(Icons.wifi_off),
+            margin: const EdgeInsets.only(right: 10),
+            child: (socketService.serverStatus == ServerStatus.online)
+              ? const Icon(Icons.check_circle)
+              : const Icon(Icons.wifi_off),
           )
         ],
       ),
@@ -61,7 +64,7 @@ class _HomePageState extends State<HomePage> {
           _showGraph(),
           Expanded(
             child: ListView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: bands.length,
               itemBuilder: (context, i) => _bandTile(bands[i])
             ),
@@ -69,9 +72,9 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
         onPressed: addNewBand,
         elevation: 1,
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -80,46 +83,46 @@ class _HomePageState extends State<HomePage> {
     final socketService = Provider.of<SocketService>(context, listen: false);
 
     return Dismissible(
-      key: Key(band.id),
+      key: Key(band.id ?? ''),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) => socketService.emit('deleteBand', band.id),
       background: Container(
         alignment: AlignmentDirectional.centerEnd,
-        padding: EdgeInsets.only(right: 10.0),
+        padding: const EdgeInsets.only(right: 10.0),
         color: Colors.red,
-        child: Icon(
+        child: const Icon(
           Icons.delete,
           color: Colors.white,
         ),
       ),
       child: ListTile(
         leading: CircleAvatar(
-          child: Text(band.name.substring(0,2)),
           backgroundColor: Colors.blue[100],
+          child: Text(band.name.value().substring(0,2)),
         ),
-        title: Text(band.name),
-        trailing: Text('${ band.votes }', style: TextStyle(fontSize: 20.0)),
+        title: Text(band.name.value()),
+        trailing: Text('${ band.votes }', style: const TextStyle(fontSize: 20.0)),
         onTap: () => socketService.emit('voteBand', band.id),
       ),
     );
   }
 
   addNewBand() {
-    final textController = new TextEditingController();
+    final textController = TextEditingController();
     if( Platform.isAndroid ) {
       return showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('New band name:'),
+          title: const Text('New band name:'),
           content: TextField(
             controller: textController,
           ),
           actions: [
             MaterialButton(
-              child: Text('Add'),
               elevation: 5,
               textColor: Colors.blue,
               onPressed: () => addBandToList(textController.text),
+              child: const Text('Add'),
             )
           ],
         )
@@ -128,7 +131,7 @@ class _HomePageState extends State<HomePage> {
     showDialog(
       context: context, 
       builder: (context) => CupertinoAlertDialog( 
-        title: Padding(
+        title: const Padding(
           padding: EdgeInsets.symmetric(vertical: 15.0),
           child: Text('New band name:'),
         ),
@@ -138,12 +141,12 @@ class _HomePageState extends State<HomePage> {
         actions: [
           CupertinoDialogAction(
             isDefaultAction: true,
-            child: Text('Add'),
+            child: const Text('Add'),
             onPressed: () => addBandToList(textController.text),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
-            child: Text('Dismiss'),
+            child: const Text('Dismiss'),
             onPressed: () => Navigator.pop(context),
           )
         ],
@@ -160,13 +163,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _showGraph() {
-    Map<String, double> dataMap = new Map();
+    Map<String, double> dataMap = {};
     
-    bands.forEach((band) {
-        dataMap.putIfAbsent(band.name, () => band.votes.toDouble());
-    });
+    for (var band in bands) {
+        dataMap.putIfAbsent(band.name.value(), () => band.votes.value().toDouble());
+    }
 
-    return Container(
+    return SizedBox(
       
       width: double.infinity,
       height: 250,
@@ -174,13 +177,13 @@ class _HomePageState extends State<HomePage> {
         elevation: 4,
         margin: EdgeInsets.zero,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: PieChart(
-            dataMap: (bands.length > 0) ? dataMap : { 'Bands': 0.0 },
+            dataMap: (bands.isNotEmpty) ? dataMap : { 'Bands': 0.0 },
             chartType: ChartType.ring,
             chartLegendSpacing: 40,
-            animationDuration: Duration(milliseconds: 1000),        
-            chartValuesOptions: ChartValuesOptions(
+            animationDuration: const Duration(milliseconds: 1000),        
+            chartValuesOptions: const ChartValuesOptions(
               showChartValuesInPercentage: true,
             ),
           ),

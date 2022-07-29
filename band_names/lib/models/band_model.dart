@@ -1,7 +1,7 @@
 class BandModel {
-  String id;
-  String name;
-  int votes;
+  final String? id;
+  final String? name;
+  final int? votes;
 
   BandModel({
     this.id,

@@ -15,7 +15,7 @@ showAlert(BuildContext context, String title, String subtitle) {
             onPressed: () => Navigator.pop(context),
             elevation: 5,
             textColor: Colors.blue  ,
-            child: Text('Ok'),
+            child: const Text('Ok'),
           )
         ],
       )
@@ -30,7 +30,7 @@ showAlert(BuildContext context, String title, String subtitle) {
       actions: [
         CupertinoButton(
           onPressed: () => Navigator.pop(context),
-          child: Text('Ok'),
+          child: const Text('Ok'),
         )
       ],
     )

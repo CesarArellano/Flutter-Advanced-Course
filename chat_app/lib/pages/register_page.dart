@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:chat_app/helpers/show_alert.dart';
-import 'package:chat_app/services/socket_service.dart';
-import 'package:chat_app/services/auth_service.dart';
-import 'package:chat_app/widgets/logo.dart';
-import 'package:chat_app/widgets/labels.dart';
-import 'package:chat_app/widgets/custom_input.dart';
-import 'package:chat_app/widgets/blue_btn.dart';
+import '../helpers/show_alert.dart';
+import '../services/auth_service.dart';
+import '../services/socket_service.dart';
+import '../widgets/blue_btn.dart';
+import '../widgets/custom_input.dart';
+import '../widgets/labels.dart';
+import '../widgets/logo.dart';
 
 class RegisterPage extends StatelessWidget {
+  const RegisterPage({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: <Widget>[
-              Logo(title: 'Sign Up'),
+              const Logo(title: 'Sign Up'),
               _Form(),
-              Labels(route: 'login', label: 'Do you already have a account?',title: 'Sign In'),
+              const Labels(route: 'login', label: 'Do you already have a account?',title: 'Sign In'),
               _TermsAndConditions(),
             ],
           ),
@@ -38,13 +40,13 @@ class _TermsAndConditions extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.only(top: 60),
-          child: Text(
+          margin: const EdgeInsets.only(top: 60),
+          child: const Text(
             'Términos y condiciones de uso', 
             style: TextStyle(fontWeight: FontWeight.w300)
           ),
         ),
-        SizedBox(height: 40.0)
+        const SizedBox(height: 40.0)
       ],
     );
   }
@@ -56,9 +58,9 @@ class _Form extends StatefulWidget {
 }
 
 class __FormState extends State<_Form> {
-  final nameController = new TextEditingController();
-  final emailController = new TextEditingController();
-  final passController = new TextEditingController();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +68,8 @@ class __FormState extends State<_Form> {
     final socketService = Provider.of<SocketService>(context);
     
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 50.0),
-      padding: EdgeInsets.symmetric(horizontal: 50.0),
+      margin: const EdgeInsets.symmetric(vertical: 50.0),
+      padding: const EdgeInsets.symmetric(horizontal: 50.0),
       child: Column(
         children: <Widget> [
           CustomInput(
@@ -97,6 +99,9 @@ class __FormState extends State<_Form> {
               socketService.connect();
               FocusScope.of(context).unfocus();
               final registerOk = await authService.register(nameController.text, emailController.text, passController.text);
+              
+              if( !mounted ) return;
+              
               if (registerOk == true) {
                 Navigator.pushReplacementNamed(context, 'users');
               } else {
