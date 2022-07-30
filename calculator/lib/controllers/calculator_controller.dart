@@ -18,7 +18,7 @@ class CalculatorController extends GetxController {
     if( mathResult.startsWith('-') ) {
       mathResult.value = mathResult.value.replaceFirst('-', '');
     } else {
-      mathResult.value = '-' + mathResult.value;
+      mathResult.value = '-${mathResult.value}';
     }
   }
 
@@ -28,7 +28,7 @@ class CalculatorController extends GetxController {
     }
 
     if(mathResult.value == '-0') {
-      return mathResult.value = '-' + number;
+      return mathResult.value = '-$number';
     }
 
     mathResult.value = mathResult.value + number;
@@ -40,7 +40,7 @@ class CalculatorController extends GetxController {
     if( mathResult.startsWith('0') ) {
       mathResult.value = '0.';
     } else {
-      mathResult.value = mathResult.value + '.';
+      mathResult.value = '${mathResult.value}.';
     }
   }
 

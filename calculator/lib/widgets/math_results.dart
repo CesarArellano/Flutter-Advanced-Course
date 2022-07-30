@@ -1,13 +1,16 @@
-import 'package:calculadora/controllers/calculator_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:calculadora/widgets/line_separator.dart';
-import 'package:calculadora/widgets/main_result.dart';
-import 'package:calculadora/widgets/sub_result.dart';
+import '../controllers/calculator_controller.dart';
+import 'line_separator.dart';
+import 'main_result.dart';
+import 'sub_result.dart';
 
 class MathResults extends StatelessWidget {
   final calculatorCtrl = Get.find<CalculatorController>();
+
+  MathResults({Key? key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -16,7 +19,7 @@ class MathResults extends StatelessWidget {
           SubResult( text: '${ calculatorCtrl.firstNumber }' ),
           SubResult( text: '${ calculatorCtrl.operation }' ),
           SubResult( text: '${ calculatorCtrl.secondNumber }' ),
-          LineSeparator(),
+          const LineSeparator(),
           MainResultText( text: '${ calculatorCtrl.mathResult }' ),
         ],
       ),
