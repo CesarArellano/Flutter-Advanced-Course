@@ -102,10 +102,10 @@ class __FormState extends State<_Form> {
               
               if( !mounted ) return;
               
-              if (registerOk == true) {
+              if ( registerOk == true ) {
                 Navigator.pushReplacementNamed(context, 'users');
               } else {
-                showAlert(context, 'Bad register', registerOk);
+                showAlert(context, 'Bad register', registerOk ?? '');
               }
             },
           )

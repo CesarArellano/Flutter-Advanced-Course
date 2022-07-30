@@ -38,10 +38,12 @@ class _UsersPageState extends State<UsersPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(user!.name, style: const TextStyle(color: Colors.black87)),
+        title: Text('${ user?.name }', style: const TextStyle(color: Colors.black87)),
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
+          splashRadius: 24,
+          tooltip: 'Logout',
           onPressed: (){
             socketService.disconnect();
             Navigator.pushReplacementNamed(context, 'login');
@@ -73,7 +75,6 @@ class _UsersPageState extends State<UsersPage> {
 
   ListView _usersListView() {
     return ListView.separated(
-      physics: const BouncingScrollPhysics(),
       itemCount: users.length,
       itemBuilder: (_, i) => _usersListTitle(users[i]),
       separatorBuilder: (_, i) => const Divider(),

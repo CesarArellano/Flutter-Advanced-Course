@@ -88,8 +88,8 @@ class AuthService with ChangeNotifier {
       _saveToken(loginResponse.token);
       return true;
     } else {
-      final respBody = jsonDecode(resp.body);
-      return respBody['msg'];
+      // final respBody = jsonDecode(resp.body);
+      return 'Algo salió mal';
     }
   }
 

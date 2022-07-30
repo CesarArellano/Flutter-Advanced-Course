@@ -1,3 +1,4 @@
+import 'package:chat_app/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Chat App',
         initialRoute: 'loading',
+        theme: AppTheme.lightTheme,
         routes: appRoutes,
       ),
     );

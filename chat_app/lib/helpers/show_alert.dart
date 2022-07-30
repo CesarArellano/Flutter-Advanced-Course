@@ -9,7 +9,7 @@ showAlert(BuildContext context, String title, String subtitle) {
       context: context,
       builder: ( _ ) => AlertDialog(
         title: Text(title),
-        content: Text(subtitle),
+        content: const Text('¡Oops! Something went wrong :('),
         actions: [
           MaterialButton(
             onPressed: () => Navigator.pop(context),
@@ -26,7 +26,7 @@ showAlert(BuildContext context, String title, String subtitle) {
     context: context, 
     builder: ( _ ) => CupertinoAlertDialog(
       title: Text(title),
-      content: Text(subtitle),
+      content: const Text('¡Oops! Something went wrong :('),
       actions: [
         CupertinoButton(
           onPressed: () => Navigator.pop(context),
