@@ -1,3 +1,4 @@
+import 'package:band_names/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Band Names',
         initialRoute: 'home',
+        theme: AppTheme.lightTheme,
         routes: {
           'home': (_) => const HomePage(),
           'status': (_) => const StatusPage()

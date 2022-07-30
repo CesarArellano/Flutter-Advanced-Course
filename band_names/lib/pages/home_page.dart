@@ -72,6 +72,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
         onPressed: addNewBand,
         elevation: 1,
         child: const Icon(Icons.add),
@@ -97,8 +98,8 @@ class _HomePageState extends State<HomePage> {
       ),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: Colors.blue[100],
-          child: Text(band.name.value().substring(0,2)),
+          backgroundColor: Colors.green[500],
+          child: Text(band.name.value().substring(0,2), style: const TextStyle(color: Colors.white)),
         ),
         title: Text(band.name.value()),
         trailing: Text('${ band.votes }', style: const TextStyle(fontSize: 20.0)),
@@ -107,30 +108,58 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Color _getRandomColor() {
+  //   return Color.fromRGBO(Random().nextInt(200), Random().nextInt(200), Random().nextInt(200), 1);
+  // }
+
   addNewBand() {
     final textController = TextEditingController();
+    
+    if( bands.length == 8 ) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      return ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text('No se pueden agregar más bandas')
+        )
+      );
+    }
+
     if( Platform.isAndroid ) {
       return showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('New band name:'),
+          backgroundColor: Colors.green.shade50,
+          shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(8) ),
+          title: const Text('New Band Name'),
           content: TextField(
             controller: textController,
+            decoration: const InputDecoration(
+              hintText: 'Band Name'
+            ),
           ),
           actions: [
-            MaterialButton(
-              elevation: 5,
-              textColor: Colors.blue,
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.redAccent,
+              ),
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.green,
+              ),
               onPressed: () => addBandToList(textController.text),
               child: const Text('Add'),
-            )
+            ),
           ],
         )
       );
     }
     showDialog(
       context: context, 
-      builder: (context) => CupertinoAlertDialog( 
+      builder: (context) => CupertinoAlertDialog(
         title: const Padding(
           padding: EdgeInsets.symmetric(vertical: 15.0),
           child: Text('New band name:'),
@@ -172,20 +201,33 @@ class _HomePageState extends State<HomePage> {
     return SizedBox(
       
       width: double.infinity,
-      height: 250,
+      height: 280,
       child: Card(
         elevation: 4,
         margin: EdgeInsets.zero,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: PieChart(
-            dataMap: (bands.isNotEmpty) ? dataMap : { 'Bands': 0.0 },
-            chartType: ChartType.ring,
-            chartLegendSpacing: 40,
-            animationDuration: const Duration(milliseconds: 1000),        
-            chartValuesOptions: const ChartValuesOptions(
-              showChartValuesInPercentage: true,
-            ),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'RESULTS:',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
+              ),
+              const SizedBox(height: 15),
+              ( bands.isNotEmpty )
+                ? PieChart(
+                  dataMap: (bands.isNotEmpty) ? dataMap : { 'Bands': 0.0 },
+                  chartType: ChartType.ring,
+                  chartLegendSpacing: 40,
+                  animationDuration: const Duration(milliseconds: 1000),        
+                  chartValuesOptions: const ChartValuesOptions(
+                    showChartValuesInPercentage: true,
+                  ),
+                )
+                : const Center(child: CircularProgressIndicator())
+            ],
           ),
         ),
       ),
