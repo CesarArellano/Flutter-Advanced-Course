@@ -73,7 +73,7 @@ class CalculatorController extends GetxController {
         mathResult.value = '${ num1 - num2 }';
       break;
       
-      case '/':
+      case '÷':
         mathResult.value = '${ num1 / num2 }';
       break;
 
