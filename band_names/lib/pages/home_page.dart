@@ -141,14 +141,14 @@ class _HomePageState extends State<HomePage> {
           actions: [
             TextButton(
               style: TextButton.styleFrom(
-                primary: Colors.redAccent,
+                foregroundColor: Colors.redAccent,
               ),
               onPressed: () => Navigator.pop(context),
               child: const Text('Cancel'),
             ),
             TextButton(
               style: TextButton.styleFrom(
-                primary: Colors.green,
+                foregroundColor: Colors.green,
               ),
               onPressed: () => addBandToList(textController.text),
               child: const Text('Add'),

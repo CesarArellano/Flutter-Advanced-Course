@@ -5,6 +5,7 @@ class CalculatorButton extends StatelessWidget {
   final Color bgColor;
   final bool big;
   final String text;
+  final Color textColor;
 
   final Function onPressed;
 
@@ -14,7 +15,8 @@ class CalculatorButton extends StatelessWidget {
     this.big = false, 
     required this.text, 
     required this.onPressed,
-  }): bgColor = bgColor ?? const Color(0xff333333),
+    this.textColor = Colors.white
+  }): bgColor = bgColor ?? const Color(0xff313131),
       super(key: key);
       
 
@@ -23,8 +25,7 @@ class CalculatorButton extends StatelessWidget {
     // Button
     final buttonStyle = TextButton.styleFrom(
         backgroundColor: bgColor,
-        primary: Colors.white,
-        shape: const StadiumBorder(),
+        foregroundColor: Colors.white,
     );
 
     return Container(
@@ -35,7 +36,15 @@ class CalculatorButton extends StatelessWidget {
           width: big ? 150 : 65,
           height: 65,
           child: Center(
-            child: Text( text , style: const TextStyle( fontSize: 30, fontWeight: FontWeight.w300 ),)
+            child: Text(
+              text, 
+              style: TextStyle(
+                color: textColor,
+                fontSize: 34,
+                fontWeight: FontWeight.w500 
+              ), 
+              textAlign: TextAlign.left,
+            ),
           ),
         ),
         onPressed: () => onPressed(),

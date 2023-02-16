@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
 
+  static const orangeButtonColor = Color(0xfff28e00 );
+  static const darkGrayButtonColor = Color(0xFF9f9f9f);
+  
   static final darkTheme = ThemeData.dark().copyWith(
     useMaterial3: true,
     splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,

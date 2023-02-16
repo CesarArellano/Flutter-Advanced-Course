@@ -19,7 +19,7 @@ class Page1 extends StatelessWidget {
           color: Colors.white,
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           onPressed: () {
-            RouteTransitions(
+            PageTransitions(
               context: context,
               child: Page2(),
               animation: AnimationType.slideLeft,

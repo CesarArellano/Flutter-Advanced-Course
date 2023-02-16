@@ -17,7 +17,7 @@ class BlueBtn extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         elevation: 2, 
         shape: const StadiumBorder(),
-        onSurface: Colors.grey,
+        disabledForegroundColor: Colors.grey,
         animationDuration: const Duration(milliseconds: 300),
         
       ),  

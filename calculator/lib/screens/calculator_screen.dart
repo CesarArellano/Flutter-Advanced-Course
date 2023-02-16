@@ -1,3 +1,4 @@
+import 'package:calculadora/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,23 +29,26 @@ class CalculatorScreen extends StatelessWidget {
                 children: [
                   CalculatorButton( 
                     text: 'AC',
-                    bgColor: const Color(0xffA5A5A5 ),
+                    textColor: Colors.black,
+                    bgColor: AppTheme.darkGrayButtonColor,
                     onPressed: () => calculatorCtrl.resetAll(),
                   ),
                   CalculatorButton( 
                     text: '+/-',
-                    bgColor: const Color(0xffA5A5A5 ),
+                    textColor: Colors.black,
+                    bgColor: AppTheme.darkGrayButtonColor,
                     onPressed: () => calculatorCtrl.changeNegativePositive(),
                   ),
                   CalculatorButton( 
                     text: 'del',
-                    bgColor: const Color(0xffA5A5A5 ),
+                    textColor: Colors.black,
+                    bgColor: AppTheme.darkGrayButtonColor,
                     onPressed: () => calculatorCtrl.deleteLastEntry(),
                   ),
                   CalculatorButton( 
-                    text: '/',
-                    bgColor: const Color(0xffF0A23B ),
-                    onPressed: () => calculatorCtrl.selectOperation('/'),
+                    text: '÷',
+                    bgColor: AppTheme.orangeButtonColor,
+                    onPressed: () => calculatorCtrl.selectOperation('÷'),
                   ),
                 ],
               ),
@@ -66,7 +70,7 @@ class CalculatorScreen extends StatelessWidget {
                   ),
                   CalculatorButton( 
                     text: 'X',
-                    bgColor: const Color(0xffF0A23B ),
+                    bgColor: AppTheme.orangeButtonColor,
                     onPressed: () => calculatorCtrl.selectOperation('X'),
                   ),
                 ],
@@ -89,7 +93,7 @@ class CalculatorScreen extends StatelessWidget {
                   ),
                   CalculatorButton( 
                     text: '-',
-                    bgColor: const Color(0xffF0A23B ),
+                    bgColor: AppTheme.orangeButtonColor,
                     onPressed: () => calculatorCtrl.selectOperation('-'),
                   ),
                 ],
@@ -112,7 +116,7 @@ class CalculatorScreen extends StatelessWidget {
                   ),
                   CalculatorButton(
                     text: '+',  
-                    bgColor: const Color(0xffF0A23B ),
+                    bgColor: AppTheme.orangeButtonColor,
                     onPressed: () => calculatorCtrl.selectOperation('+'),
                   ),
                 ],
@@ -132,7 +136,7 @@ class CalculatorScreen extends StatelessWidget {
                   ),
                   CalculatorButton( 
                     text: '=',
-                    bgColor: const Color(0xffF0A23B ),
+                    bgColor: AppTheme.orangeButtonColor,
                     onPressed: () => calculatorCtrl.calculateResult(),
                   ),
                 ],
@@ -141,6 +145,6 @@ class CalculatorScreen extends StatelessWidget {
           ),
         ),
       )
-   );
+    );
   }
 }
