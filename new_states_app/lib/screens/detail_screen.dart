@@ -11,7 +11,13 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail User')
+        title: StreamBuilder<User>(
+          stream: userService.userStream,
+          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+            final name = snapshot.data?.name ?? 'Detail Page';
+            return Text(name);
+          }
+        ),
       ),
       body: Center(
         child: Column(
@@ -21,7 +27,7 @@ class DetailScreen extends StatelessWidget {
               text: 'Set User',
               onPressed: () {
                 userService.loadUser(User(
-                  age: '23',
+                  age: 22,
                   name: 'César Arellano',
                   professions: ['Mobile Developer', 'Web Developer']
                 ));
@@ -30,7 +36,7 @@ class DetailScreen extends StatelessWidget {
             _DetailButton(
               text: 'Set Age',
               onPressed: () {
-
+                userService.changeAge(23);
               },
             ),
             _DetailButton(

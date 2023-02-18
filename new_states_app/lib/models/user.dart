@@ -7,6 +7,6 @@ class User {
   });
   
   String name;
-  String age;
+  int age;
   List<String> professions;
 }
