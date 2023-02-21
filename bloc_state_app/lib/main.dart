@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_states_app/bloc/user/user_bloc.dart';
 
 import 'package:new_states_app/screens/screens.dart';
 
@@ -9,15 +11,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      initialRoute: 'home',
-      theme: ThemeData.light(useMaterial3: true),
-      routes: {
-        'home': (_) => const HomeScreen(),
-        'detail': (_) => const DetailScreen()
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => UserBloc())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Bloc State App',
+        initialRoute: 'home',
+        theme: ThemeData.light(useMaterial3: true),
+        routes: {
+          'home': (_) => const HomeScreen(),
+          'detail': (_) => const DetailScreen()
+        },
+      ),
     );
   }
 }

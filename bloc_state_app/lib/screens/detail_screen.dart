@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_states_app/services/user_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:new_states_app/bloc/user/user_bloc.dart';
 
 import '../models/user.dart';
 
@@ -9,12 +10,13 @@ class DetailScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    final userBloc = BlocProvider.of<UserBloc>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
-        title: StreamBuilder<User>(
-          stream: userService.userStream,
-          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-            final name = snapshot.data?.name ?? 'Detail Page';
+        title: BlocBuilder<UserBloc, UserState>(
+          builder: (BuildContext context, UserState state) {
+            final name = state.user?.name ?? 'Detail Page';
             return Text(name);
           }
         ),
@@ -24,25 +26,33 @@ class DetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _DetailButton(
-              text: 'Set User',
+              text: 'Set user',
               onPressed: () {
-                userService.loadUser(User(
-                  age: 22,
+                final newUser = User(
                   name: 'César Arellano',
-                  professions: ['Mobile Developer', 'Web Developer']
-                ));
+                  age: 23,
+                  professions: ['Flutter Developer', 'React Developer']
+                );
+                
+                userBloc.add(ActivateUser( newUser ));
               },
             ),
             _DetailButton(
-              text: 'Set Age',
+              text: 'Set age',
               onPressed: () {
-                userService.changeAge(23);
+                userBloc.add(ChangeUserAge(32));
               },
             ),
             _DetailButton(
               text: 'Add profession',
               onPressed: () {
-
+                userBloc.add(AddUserProffesion('New Profession'));
+              },
+            ),
+            _DetailButton(
+              text: 'Remove user',
+              onPressed: () {
+                userBloc.add(RemoveUser());
               },
             ),
           ],
