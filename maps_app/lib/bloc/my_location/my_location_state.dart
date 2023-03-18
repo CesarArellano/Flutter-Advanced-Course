@@ -6,7 +6,7 @@ class MyLocationState {
   final bool existLocation;
   final LatLng? location;
 
-  MyLocationState({ 
+  const MyLocationState({ 
     this.following = true,
     this.existLocation = false,
     this.location
@@ -16,7 +16,7 @@ class MyLocationState {
     bool? following,
     bool? existLocation,
     LatLng? location,
-  }) => new MyLocationState(
+  }) => MyLocationState(
     following    : following ?? this.following,
     existLocation: existLocation ?? this.existLocation,
     location     : location ?? this.location

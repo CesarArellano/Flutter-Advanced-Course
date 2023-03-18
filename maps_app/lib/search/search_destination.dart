@@ -11,26 +11,26 @@ class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
   final List<SearchDestinationsResult> history;
 
   SearchDestination( this.proximity, this.history ) : 
-    this.searchFieldLabel = 'Search...',
-    this._trafficService = new TrafficService();
+    searchFieldLabel = 'Search...',
+    _trafficService = TrafficService();
 
   @override
   List<Widget> buildActions(BuildContext context) {
     return [ 
       IconButton(
-        onPressed: () => this.query = '',
-        icon: Icon(Icons.clear, color: Colors.black)
+        onPressed: () => query = '',
+        icon: const Icon(Icons.clear, color: Colors.black)
       )
     ];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
-    final searchResult = new SearchDestinationsResult(cancel: true);
+    final searchResult = SearchDestinationsResult(cancel: true);
 
     return IconButton(
-      onPressed: () => this.close(context, searchResult),
-      icon: Icon(Icons.arrow_back, color: Colors.black)
+      onPressed: () => close(context, searchResult),
+      icon: const Icon(Icons.arrow_back, color: Colors.black)
     );
   }
 
@@ -42,24 +42,24 @@ class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    if( this.query.length == 0) {
-      final searchResult = new SearchDestinationsResult(cancel: false, manually: true);
+    if( query.isEmpty) {
+      final searchResult = SearchDestinationsResult(cancel: false, manually: true);
       return ListView(
         children: <Widget>[
           ListTile(
-            leading: Icon(Icons.location_on),
-            title: Text('Set Location Manually'),
+            leading: const Icon(Icons.location_on),
+            title: const Text('Set Location Manually'),
             onTap: () {
-              this.close(context, searchResult);
+              close(context, searchResult);
             },
           ),
-          ...this.history.map(
+          ...history.map(
             (place) =>  ListTile(
-              leading: Icon(Icons.history),
+              leading: const Icon(Icons.history),
               title: Text(place.destinationName!),
               subtitle: Text(place.description!),
               onTap: () {
-                this.close(context, place );
+                close(context, place );
               },
             )
           ).toList()
@@ -68,23 +68,23 @@ class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
       );
     }
 
-    return this._buildingResultsSuggestions(context);
+    return _buildingResultsSuggestions(context);
     
   }
 
   Widget _buildingResultsSuggestions(BuildContext context) {
     
-    if ( this.query.length == 0) {
+    if ( query.isEmpty) {
       return Container();
     }
     
-    this._trafficService.getSuggestionsByQuery( this.query.trim(), proximity );
+    _trafficService.getSuggestionsByQuery( query.trim(), proximity );
     
     return StreamBuilder(
-      stream: this._trafficService.suggestionsStream,
+      stream: _trafficService.suggestionsStream,
       builder: ( _ , AsyncSnapshot<dynamic> snapshot) {
         if ( !snapshot.hasData ) {
-          return Center( child: CircularProgressIndicator());
+          return const Center( child: CircularProgressIndicator());
         }
         
         final places = snapshot.data['features'];
@@ -96,15 +96,15 @@ class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
         }
         return ListView.separated(
           itemCount: places.length, 
-          separatorBuilder: ( _, i) => Divider(),
+          separatorBuilder: ( _, i) => const Divider(),
           itemBuilder: ( _, i)  {
             final place = places[i];
             return ListTile(
-              leading: Icon( Icons.place ),
+              leading: const Icon( Icons.place ),
               title: Text(place['text_es']),
               subtitle: Text( place['place_name_es'] ),
               onTap: () {
-                this.close(context, SearchDestinationsResult(
+                close(context, SearchDestinationsResult(
                     cancel: false, 
                     manually: false,
                     position: LatLng(place['center'][1], place['center'][0]),

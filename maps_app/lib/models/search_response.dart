@@ -85,8 +85,8 @@ class Feature {
         center: List<double>.from(json["center"].map((x) => x.toDouble())),
         geometry: Geometry.fromJson(json["geometry"]),
         context: List<Context>.from(json["context"].map((x) => Context.fromJson(x))),
-        matchingText: json["matching_text"] == null ? null : json["matching_text"],
-        matchingPlaceName: json["matching_place_name"] == null ? null : json["matching_place_name"],
+        matchingText: json["matching_text"],
+        matchingPlaceName: json["matching_place_name"],
         languageEs: json["language_es"] == null ? null : languageValues.map![json["language_es"]],
         language: json["language"] == null ? null : languageValues.map![json["language"]],
     );
@@ -105,8 +105,8 @@ class Feature {
         "center": List<dynamic>.from(center!.map((x) => x)),
         "geometry": geometry!.toJson(),
         "context": List<dynamic>.from(context!.map((x) => x.toJson())),
-        "matching_text": matchingText == null ? null : matchingText,
-        "matching_place_name": matchingPlaceName == null ? null : matchingPlaceName,
+        "matching_text": matchingText,
+        "matching_place_name": matchingPlaceName,
         "language_es": languageEs == null ? null : languageValues.reverse[languageEs],
         "language": language == null ? null : languageValues.reverse[language],
     };
@@ -133,22 +133,22 @@ class Context {
 
     factory Context.fromJson(Map<String, dynamic> json) => Context(
         id: json["id"],
-        wikidata: json["wikidata"] == null ? null : json["wikidata"],
+        wikidata: json["wikidata"],
         textEs: json["text_es"],
         languageEs: json["language_es"] == null ? null : languageValues.map![json["language_es"]],
         text: json["text"],
         language: json["language"] == null ? null : languageValues.map![json["language"]],
-        shortCode: json["short_code"] == null ? null : json["short_code"],
+        shortCode: json["short_code"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "wikidata": wikidata == null ? null : wikidata,
+        "wikidata": wikidata,
         "text_es": textEs,
         "language_es": languageEs == null ? null : languageValues.reverse[languageEs],
         "text": text,
         "language": language == null ? null : languageValues.reverse[language],
-        "short_code": shortCode == null ? null : shortCode,
+        "short_code": shortCode,
     };
 }
 
@@ -194,19 +194,19 @@ class Properties {
     String? wikidata;
 
     factory Properties.fromJson(Map<String, dynamic> json) => Properties(
-        foursquare: json["foursquare"] == null ? null : json["foursquare"],
-        landmark: json["landmark"] == null ? null : json["landmark"],
-        category: json["category"] == null ? null : json["category"],
-        address: json["address"] == null ? null : json["address"],
-        wikidata: json["wikidata"] == null ? null : json["wikidata"],
+        foursquare: json["foursquare"],
+        landmark: json["landmark"],
+        category: json["category"],
+        address: json["address"],
+        wikidata: json["wikidata"],
     );
 
     Map<String, dynamic> toJson() => {
-        "foursquare": foursquare == null ? null : foursquare,
-        "landmark": landmark == null ? null : landmark,
-        "category": category == null ? null : category,
-        "address": address == null ? null : address,
-        "wikidata": wikidata == null ? null : wikidata,
+        "foursquare": foursquare,
+        "landmark": landmark,
+        "category": category,
+        "address": address,
+        "wikidata": wikidata,
     };
 }
 
@@ -217,9 +217,7 @@ class EnumValues<T> {
   EnumValues(this.map);
 
   Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map!.map((k, v) => new MapEntry(v, k));
-    }
+    reverseMap ??= map!.map((k, v) => MapEntry(v, k));
     return reverseMap ?? {};
   }
 }

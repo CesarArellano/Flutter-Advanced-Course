@@ -2,7 +2,7 @@ part of 'helpers.dart';
 
 Future<BitmapDescriptor> getAssetImageMarker() async {
   return await BitmapDescriptor.fromAssetImage(
-    ImageConfiguration(
+    const ImageConfiguration(
       devicePixelRatio: 2.5
     ), 
     'assets/images/custom-pin.png'
@@ -22,5 +22,5 @@ Future<BitmapDescriptor> getNetworkImageMarker() async {
   final frame = await imageCodec.getNextFrame();
   final data = await frame.image.toByteData( format: ui.ImageByteFormat.png );
 
-  return await BitmapDescriptor.fromBytes( data!.buffer.asUint8List() );
+  return BitmapDescriptor.fromBytes( data!.buffer.asUint8List() );
 }

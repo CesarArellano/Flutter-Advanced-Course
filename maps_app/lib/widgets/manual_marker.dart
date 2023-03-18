@@ -1,6 +1,8 @@
 part of 'widgets.dart';
 
 class ManualMarker extends StatelessWidget {
+  const ManualMarker({super.key});
+
   @override
   Widget build(BuildContext context) {
 
@@ -29,12 +31,12 @@ class _ManualMarkerBuild extends StatelessWidget {
           top: 70,
           left: 20,
           child: FadeInLeft(
-            duration: Duration( milliseconds:  150 ),
+            duration: const Duration( milliseconds:  150 ),
             child: CircleAvatar(
               maxRadius: 25,
               backgroundColor: Colors.white,
               child: IconButton(
-                icon: Icon( Icons.arrow_back, color: Colors.black87),
+                icon: const Icon( Icons.arrow_back, color: Colors.black87),
                 onPressed: () => BlocProvider.of<SearchingBloc>(context).add(OnDeactivateManualMarker()),
               )
             ),
@@ -42,10 +44,10 @@ class _ManualMarkerBuild extends StatelessWidget {
         ),
         Center(
           child: Transform.translate(
-            offset: Offset(0, -18),
+            offset: const Offset(0, -18),
             child: BounceInDown(
               from: 200,
-              child: Icon( Icons.location_on, size: 50)
+              child: const Icon( Icons.location_on, size: 50)
             )
           )
         ),
@@ -54,18 +56,18 @@ class _ManualMarkerBuild extends StatelessWidget {
           bottom: 70,
           left: 30,
           child: FadeIn(
-            duration: Duration(milliseconds: 700),
+            duration: const Duration(milliseconds: 700),
             child: MaterialButton(
               minWidth: width - 120,
               height: 45,
-              child: Text('Confirm destination', style: TextStyle( color: Colors.white, fontSize: 16 )),
               color: Colors.black,
               elevation: 0,
               splashColor: Colors.transparent,
-              shape: StadiumBorder(),
+              shape: const StadiumBorder(),
               onPressed: () {
-                this.calculateDestination(context);
+                calculateDestination(context);
               },
+              child: const Text('Confirm destination', style: TextStyle( color: Colors.white, fontSize: 16 )),
             ),
           ),
         )
@@ -76,7 +78,7 @@ class _ManualMarkerBuild extends StatelessWidget {
   void calculateDestination(BuildContext context) async {
     calculatingAlert(context);
 
-    final trafficService = new TrafficService();
+    final trafficService = TrafficService();
     final mapBloc = BlocProvider.of<MapBloc>(context);
     final searchingBloc = BlocProvider.of<SearchingBloc>(context);
 

@@ -4,6 +4,8 @@ import 'package:permission_handler/permission_handler.dart';
 
 
 class GpsAccessPage extends StatefulWidget {
+  const GpsAccessPage({super.key});
+
 
   @override
   _GpsAccessPageState createState() => _GpsAccessPageState();
@@ -27,6 +29,7 @@ class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserv
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     if( state == AppLifecycleState.resumed ) {
       if( await Permission.location.isGranted ) {
+        if( !mounted ) return;
         Navigator.pushReplacementNamed(context, 'loading');
       }
     }
@@ -40,19 +43,19 @@ class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserv
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset('assets/images/gps_permission2.svg', width: 200),
-            SizedBox(height: 20),
-            Text('You need a GPS permission to use this app', style: TextStyle(fontSize: 16.0),),
-            SizedBox(height: 20),
-            Container(
+            const SizedBox(height: 20),
+            const Text('You need a GPS permission to use this app', style: TextStyle(fontSize: 16.0),),
+            const SizedBox(height: 20),
+            SizedBox(
               width: 160,
               height: 45,
               child: MaterialButton(
-                child: Text('Request access', style: TextStyle( color: Colors.white, fontSize: 16.0),),
                 color: Colors.black,
                 elevation: 0, 
                 splashColor: Colors.transparent,
-                shape: StadiumBorder(),
-                onPressed: () => gpsAccess()
+                shape: const StadiumBorder(),
+                onPressed: () => gpsAccess(),
+                child: const Text('Request access', style: TextStyle( color: Colors.white, fontSize: 16.0),)
               ),
             ),
           ],
@@ -66,6 +69,7 @@ class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserv
     switch(status) {
 
       case PermissionStatus.granted:
+        if( !mounted ) return;
         Navigator.pushReplacementNamed(context,'map');
       break;
       case PermissionStatus.denied:

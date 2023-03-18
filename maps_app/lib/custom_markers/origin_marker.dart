@@ -8,10 +8,10 @@ class OriginMarkerPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final double blackCircleRadius = 20;
-    final double whiteCircleRadius = 7;
+    const double blackCircleRadius = 20;
+    const double whiteCircleRadius = 7;
 
-    Paint paint = new Paint()
+    Paint paint = Paint()
       ..color = Colors.black;
 
     // Draw black circle
@@ -31,7 +31,7 @@ class OriginMarkerPainter extends CustomPainter {
     );
 
     // Shadow
-    final Path path = new Path();
+    final Path path = Path();
     path.moveTo( 40, 20);
     path.lineTo( size.width - 10, 20 );
     path.lineTo( size.width - 10, 100 );
@@ -44,16 +44,16 @@ class OriginMarkerPainter extends CustomPainter {
 
     // Black box
     paint.color = Colors.black87;
-    final blackBox = Rect.fromLTWH(40, 20, 70, 80);
+    const blackBox = Rect.fromLTWH(40, 20, 70, 80);
     canvas.drawRect(blackBox, paint);
 
     // Draw texts
-    TextSpan textSpan = new TextSpan(
+    TextSpan textSpan = TextSpan(
       text: '$minutes',
-      style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w400 ),
+      style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w400 ),
     );
 
-    TextPainter textPainter = new TextPainter(
+    TextPainter textPainter = TextPainter(
       text: textSpan,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center
@@ -62,15 +62,15 @@ class OriginMarkerPainter extends CustomPainter {
       minWidth: 70
     );
 
-    textPainter.paint(canvas, Offset(40, 35));
+    textPainter.paint(canvas, const Offset(40, 35));
 
     // My location
-    textSpan = new TextSpan(
+    textSpan = const TextSpan(
       text: 'Min',
       style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400 ),
     );
 
-    textPainter = new TextPainter(
+    textPainter = TextPainter(
       text: textSpan,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center
@@ -79,16 +79,16 @@ class OriginMarkerPainter extends CustomPainter {
       minWidth: 70
     );
 
-    textPainter.paint(canvas, Offset(40, 67));
+    textPainter.paint(canvas, const Offset(40, 67));
 
     // My location
 
-    textSpan = new TextSpan(
+    textSpan = const TextSpan(
       text: 'My location',
       style: TextStyle(color: Colors.black, fontSize: 32, fontWeight: FontWeight.w400 ),
     );
 
-    textPainter = new TextPainter(
+    textPainter = TextPainter(
       text: textSpan,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center
@@ -96,7 +96,7 @@ class OriginMarkerPainter extends CustomPainter {
       maxWidth: size.width - 130
     );
 
-    textPainter.paint(canvas, Offset(130, 45));
+    textPainter.paint(canvas, const Offset(130, 45));
 
   }
 

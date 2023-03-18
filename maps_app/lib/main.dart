@@ -12,9 +12,11 @@ import 'package:maps_app/pages/loading_page.dart';
 import 'package:maps_app/pages/map_page.dart';
 import 'package:maps_app/pages/test_marker_page.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -28,10 +30,10 @@ class MyApp extends StatelessWidget {
         title: 'Maps App',
         initialRoute: 'loading',
         routes: {
-          'loading': (_) => LoadingPage(),
-          'gps_access': ( _ ) => GpsAccessPage(),
-          'map': (_) => MapPage(),
-          'test_marker': ( _ ) => TestMarkerPage(),
+          'loading': (_) => const LoadingPage(),
+          'gps_access': ( _ ) => const GpsAccessPage(),
+          'map': (_) => const MapPage(),
+          'test_marker': ( _ ) => const TestMarkerPage(),
         }
       ),
     );

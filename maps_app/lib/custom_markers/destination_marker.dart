@@ -9,10 +9,10 @@ class DestinationMarkerPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final double blackCircleRadius = 20;
-    final double whiteCircleRadius = 7;
+    const double blackCircleRadius = 20;
+    const double whiteCircleRadius = 7;
 
-    Paint paint = new Paint()
+    Paint paint = Paint()
       ..color = Colors.black;
 
     // Draw black circle
@@ -32,7 +32,7 @@ class DestinationMarkerPainter extends CustomPainter {
     );
 
     // Shadow
-    final Path path = new Path();
+    final Path path = Path();
     path.moveTo( 40, 20);
     path.lineTo( size.width - 10, 20 );
     path.lineTo( size.width - 10, 100 );
@@ -45,20 +45,20 @@ class DestinationMarkerPainter extends CustomPainter {
 
     // Black box
     paint.color = Colors.black87;
-    final blackBox = Rect.fromLTWH(0, 20, 70, 80);
+    const blackBox = Rect.fromLTWH(0, 20, 70, 80);
     canvas.drawRect(blackBox, paint);
 
     // Draw texts
-    double km = this.meters / 1000;
+    double km = meters / 1000;
     km = (km * 100).floorToDouble();
     km = km / 100;
 
-    TextSpan textSpan = new TextSpan(
+    TextSpan textSpan = TextSpan(
       text: '$km',
-      style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w400 ),
+      style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w400 ),
     );
 
-    TextPainter textPainter = new TextPainter(
+    TextPainter textPainter = TextPainter(
       text: textSpan,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center
@@ -66,15 +66,15 @@ class DestinationMarkerPainter extends CustomPainter {
       maxWidth: 70,
     );
 
-    textPainter.paint(canvas, Offset(8, 40));
+    textPainter.paint(canvas, const Offset(8, 40));
 
     // My location
-    textSpan = new TextSpan(
+    textSpan = const TextSpan(
       text: 'Km',
       style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400 ),
     );
 
-    textPainter = new TextPainter(
+    textPainter = TextPainter(
       text: textSpan,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center
@@ -83,15 +83,15 @@ class DestinationMarkerPainter extends CustomPainter {
       minWidth: 70
     );
 
-    textPainter.paint(canvas, Offset(0, 67));
+    textPainter.paint(canvas, const Offset(0, 67));
 
     // My description
-    textSpan = new TextSpan(
+    textSpan = TextSpan(
       text: description,
-      style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.w400 ),
+      style: const TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.w400 ),
     );
 
-    textPainter = new TextPainter(
+    textPainter = TextPainter(
       text: textSpan,
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.left,
@@ -101,7 +101,7 @@ class DestinationMarkerPainter extends CustomPainter {
       maxWidth: size.width - 130
     );
 
-    textPainter.paint(canvas, Offset(90, 28));
+    textPainter.paint(canvas, const Offset(90, 28));
 
   }
 

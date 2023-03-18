@@ -9,7 +9,7 @@ part 'searching_state.dart';
 
 class SearchingBloc extends Bloc<SearchingEvent, SearchingState> {
   
-  SearchingBloc() : super(SearchingState());
+  SearchingBloc() : super(const SearchingState());
 
   @override
   Stream<SearchingState> mapEventToState( SearchingEvent event ) async* {

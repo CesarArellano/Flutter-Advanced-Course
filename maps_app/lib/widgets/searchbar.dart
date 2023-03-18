@@ -1,6 +1,8 @@
 part of 'widgets.dart';
 
 class SearchBar extends StatelessWidget {
+  const SearchBar({super.key});
+
   
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class SearchBar extends StatelessWidget {
     
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         width: size.width,
         height: 65,
         child: GestureDetector(
@@ -31,16 +33,17 @@ class SearchBar extends StatelessWidget {
             final proximity = BlocProvider.of<MyLocationBloc>(context).state.location;
             final history = BlocProvider.of<SearchingBloc>(context).state.history;
             final SearchDestinationsResult? result = await showSearch(context: context, delegate: SearchDestination(proximity!, history));
+            // ignore: use_build_context_synchronously
             returnSearching(context, result!);
           },
           child: Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             width: double.infinity,
             height: 65,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(100),
-              boxShadow: <BoxShadow>[
+              boxShadow: const <BoxShadow>[
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 5,
@@ -52,12 +55,12 @@ class SearchBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: EdgeInsets.only(left: 5),
-                  child: Text('¿A dónde quieres ir?', 
+                  padding: const EdgeInsets.only(left: 5),
+                  child: const Text('¿A dónde quieres ir?', 
                     style: TextStyle(fontSize: 18)
                   )
                 ),
-                Icon(Icons.search)
+                const Icon(Icons.search)
               ],
             ),
           ),
@@ -75,13 +78,13 @@ class SearchBar extends StatelessWidget {
     }
 
     // Calculate route based in SearchDelegate Value.
-    final _trafficService = TrafficService();
+    final trafficService = TrafficService();
     final mapBloc = BlocProvider.of<MapBloc>(context);
     
     final origin = BlocProvider.of<MyLocationBloc>(context).state.location;
     final destination = result.position;
 
-    final drivingResponse = await _trafficService.getStartAndFinalCoords(origin!, destination!);
+    final drivingResponse = await trafficService.getStartAndFinalCoords(origin!, destination!);
     
     final geometry = drivingResponse.routes![0].geometry;
     final distance = drivingResponse.routes![0].distance;

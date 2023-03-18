@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:maps_app/custom_markers/custom_markers.dart';
 
 class TestMarkerPage extends StatelessWidget {
+  const TestMarkerPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,8 @@ import 'package:maps_app/widgets/widgets.dart';
 
 
 class MapPage extends StatefulWidget {
+  const MapPage({super.key});
+
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -34,8 +36,8 @@ class _MapPageState extends State<MapPage> {
           return Stack(
             children: <Widget>[
               createMap(state),
-              ManualMarker(),
-              Positioned(
+              const ManualMarker(),
+              const Positioned(
                 top: 10,
                 child: SearchBar()
               ),
@@ -45,7 +47,7 @@ class _MapPageState extends State<MapPage> {
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
+        children: const [
           BtnLocation(),
           BtnFollowLocation(),
           BtnMyRoute(),
@@ -55,13 +57,13 @@ class _MapPageState extends State<MapPage> {
   }
 
   Widget createMap(MyLocationState state) {
-    if( !state.existLocation ) return Center(child: Text('Tracking...'));
+    if( !state.existLocation ) return const Center(child: Text('Tracking...'));
 
     final mapBloc = BlocProvider.of<MapBloc>(context);
 
     mapBloc.add( OnNewLocation(state.location!) );
 
-    final cameraPosition = new CameraPosition(
+    final cameraPosition = CameraPosition(
       target: state.location!,
       zoom: 15
     );

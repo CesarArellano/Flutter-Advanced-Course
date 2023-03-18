@@ -19,9 +19,9 @@ class MapState {
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers
   }): 
-    this.polylines = polylines ?? new Map(),
-    this.markers = markers ?? new Map(),
-    this.centralLocation = centralLocation ?? new LatLng(0, 0);
+    polylines = polylines ?? {},
+    markers = markers ?? {},
+    centralLocation = centralLocation ?? const LatLng(0, 0);
 
   MapState copyWith({
     bool? mapReady,

@@ -127,7 +127,7 @@ class Context {
       id: json["id"],
       textEs: json["text_es"],
       text: json["text"],
-      wikidata: json["wikidata"] == null ? null : json["wikidata"],
+      wikidata: json["wikidata"],
       languageEs: json["language_es"] == null ? null : languageValues.map![json["language_es"]],
       language: json["language"] == null ? null : languageValues.map![json["language"]],
       shortCode: json["short_code"] == null ? null : shortCodeValues.map![json["short_code"]],
@@ -137,19 +137,19 @@ class Context {
     "id": id,
     "text_es": textEs,
     "text": text,
-    "wikidata": wikidata == null ? null : wikidata,
+    "wikidata": wikidata,
     "language_es": languageEs == null ? null : languageValues.reverse[languageEs],
     "language": language == null ? null : languageValues.reverse[language],
     "short_code": shortCode == null ? null : shortCodeValues.reverse[shortCode],
   };
 }
 
-enum Language { EN, ES, FR }
+enum Language { en, es, fr }
 
 final languageValues = EnumValues({
-  "en": Language.EN,
-  "es": Language.ES,
-  "fr": Language.FR
+  "en": Language.en,
+  "es": Language.es,
+  "fr": Language.fr
 });
 
 enum ShortCode { AU_QLD, AU, AU_NSW }
@@ -174,13 +174,13 @@ class Geometry {
   factory Geometry.fromJson(Map<String, dynamic> json) => Geometry(
     type: json["type"],
     coordinates: List<double>.from(json["coordinates"].map((x) => x.toDouble())),
-    interpolated: json["interpolated"] == null ? null : json["interpolated"],
+    interpolated: json["interpolated"],
   );
 
   Map<String, dynamic> toJson() => {
     "type": type,
     "coordinates": List<dynamic>.from(coordinates!.map((x) => x)),
-    "interpolated": interpolated == null ? null : interpolated,
+    "interpolated": interpolated,
   };
 }
 
@@ -207,9 +207,7 @@ class EnumValues<T> {
   EnumValues(this.map);
 
   Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map!.map((k, v) => new MapEntry(v, k));
-    }
+    reverseMap ??= map!.map((k, v) => MapEntry(v, k));
     return reverseMap ?? {};
   }
 }

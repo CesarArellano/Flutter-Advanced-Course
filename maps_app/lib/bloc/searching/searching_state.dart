@@ -5,7 +5,7 @@ class SearchingState {
   final bool manualSelection;
   final List<SearchDestinationsResult> history;
 
-  SearchingState({
+  const SearchingState({
     this.history = const [],
     this.manualSelection = false,
   });
@@ -13,7 +13,7 @@ class SearchingState {
   SearchingState copyWith({
     bool? manualSelection,
     List<SearchDestinationsResult>? history
-  }) => new SearchingState(
+  }) => SearchingState(
     manualSelection: manualSelection ?? this.manualSelection,
     history: history ?? this.history
   );

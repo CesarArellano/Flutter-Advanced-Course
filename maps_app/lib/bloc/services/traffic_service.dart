@@ -16,11 +16,11 @@ class TrafficService {
     return _instance;
   }
 
-  final _dio = new Dio();
-  final debouncer = Debouncer<String>(duration: Duration(milliseconds: 400 ));
+  final _dio = Dio();
+  final debouncer = Debouncer<String>(duration: const Duration(milliseconds: 400 ));
   
-  final StreamController _suggestionsStreamController = new StreamController.broadcast();
-  Stream get suggestionsStream => this._suggestionsStreamController.stream;
+  final StreamController _suggestionsStreamController = StreamController.broadcast();
+  Stream get suggestionsStream => _suggestionsStreamController.stream;
 
 
   final _apiKey = 'pk.eyJ1IjoicmF5d2F5ZGF5IiwiYSI6ImNrcmZtZmk3ZDB3a2QycGxqMWJoZHJ3N3oifQ.i7a_5fZjpsDEuZvc-pivgQ';
@@ -33,13 +33,13 @@ class TrafficService {
     }
     
     final coordString = '${ origin.longitude },${ origin.latitude };${ destination.longitude },${ destination.latitude }';
-    final url = '${ this.baseUrl }/directions/v5/mapbox/driving/$coordString';
+    final url = '$baseUrl /directions/v5/mapbox/driving/$coordString';
 
-    final resp = await this._dio.get(url, queryParameters:  {
+    final resp = await _dio.get(url, queryParameters:  {
       'alternatives': true,
       'geometries': 'polyline6',
       'steps': false,
-      'access_token': this._apiKey,
+      'access_token': _apiKey,
       'language': 'es',
     });
     
@@ -50,10 +50,10 @@ class TrafficService {
   }
 
   Future getResultsByQuery(String query, LatLng proximity) async {
-    final url = '${ this.baseUrl }/geocoding/v5/mapbox.places/$query.json';
+    final url = '$baseUrl /geocoding/v5/mapbox.places/$query.json';
 
-    final resp = await this._dio.get(url, queryParameters: {
-      'access_token': this._apiKey,
+    final resp = await _dio.get(url, queryParameters: {
+      'access_token': _apiKey,
       'autocomplete': true,
       'proximity': '${ proximity.longitude },${ proximity.latitude }',
       'language': 'es',
@@ -68,23 +68,23 @@ class TrafficService {
 
     debouncer.value = '';
     debouncer.onValue = ( value ) async {
-      final results = await this.getResultsByQuery(value, proximity);
-      this._suggestionsStreamController.add(results);
+      final results = await getResultsByQuery(value, proximity);
+      _suggestionsStreamController.add(results);
     };
 
-    final timer = Timer.periodic(Duration(milliseconds: 200), (_) {
+    final timer = Timer.periodic(const Duration(milliseconds: 200), (_) {
       debouncer.value = query;
     });
 
-    Future.delayed(Duration(milliseconds: 201)).then((_) => timer.cancel()); 
+    Future.delayed(const Duration(milliseconds: 201)).then((_) => timer.cancel()); 
 
   }
 
   Future<ReverseQueryResponse> getCoordsInfo( LatLng destinationCoords ) async {
-    final url = '${this.baseUrl}/geocoding/v5/mapbox.places/${ destinationCoords.longitude },${ destinationCoords.latitude }.json';
+    final url = '$baseUrl/geocoding/v5/mapbox.places/${ destinationCoords.longitude },${ destinationCoords.latitude }.json';
 
-    final resp = await this._dio.get(url, queryParameters: {
-      'access_token': this._apiKey,
+    final resp = await _dio.get(url, queryParameters: {
+      'access_token': _apiKey,
       'language': 'es',
     });
 

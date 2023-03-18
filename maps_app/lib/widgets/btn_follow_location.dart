@@ -1,13 +1,12 @@
 part of './widgets.dart';
 
 class BtnFollowLocation extends StatelessWidget {
+  const BtnFollowLocation({super.key});
+
   @override
   Widget build(BuildContext context) {
-    
-
     return BlocBuilder<MapBloc, MapState>(
-      builder: ( context, state ) => this._createBtn(context, state)
-
+      builder: ( context, state ) => _createBtn(context, state)
     );
   }
 
@@ -16,7 +15,7 @@ class BtnFollowLocation extends StatelessWidget {
     final mapBloc = BlocProvider.of<MapBloc>(context);
 
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       child: CircleAvatar(
         backgroundColor: Colors.white,
         maxRadius: 25,
