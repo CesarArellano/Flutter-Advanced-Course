@@ -100,7 +100,7 @@ class __FormState extends State<_Form> {
               FocusScope.of(context).unfocus();
               final registerOk = await authService.register(nameController.text, emailController.text, passController.text);
               
-              if( !mounted ) return;
+              if( !context.mounted ) return;
               
               if ( registerOk == true ) {
                 Navigator.pushReplacementNamed(context, 'users');

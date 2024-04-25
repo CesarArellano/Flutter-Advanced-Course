@@ -90,7 +90,7 @@ class __FormState extends State<_Form> {
               FocusScope.of(context).unfocus();
               final loginOk = await authService.login(emailController.text, passController.text);
               
-              if( !mounted ) return;
+              if( !context.mounted ) return;
               
               if (loginOk) {
                 socketService.connect();

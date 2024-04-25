@@ -96,8 +96,8 @@ class SearchBar extends StatelessWidget {
       (coords) => LatLng(coords[0].toDouble(), coords[1].toDouble())
     ).toList();
     
+    if ( !context.mounted ) return;
     mapBloc.add(OnCreateRouteOriginDestination(routeCoords, distance!, duration!, destinationName!));
-    
     final searchingBloc = BlocProvider.of<SearchingBloc>(context);
     searchingBloc.add( OnAddHistory( result ));
 

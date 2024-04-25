@@ -34,7 +34,7 @@ class _LoadingPageState extends State<LoadingPage> {
 
     final authenticated = await authService.isLoggedIn();
 
-    if( !mounted ) return;
+    if( !context.mounted ) return;
     
     if (authenticated) {
       socketService.connect();

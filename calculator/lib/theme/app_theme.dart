@@ -7,7 +7,6 @@ class AppTheme {
   static const darkGrayButtonColor = Color(0xFF9f9f9f);
   
   static final darkTheme = ThemeData.dark().copyWith(
-    useMaterial3: true,
     splashFactory: InkSparkle.constantTurbulenceSeedSplashFactory,
     scaffoldBackgroundColor: Colors.black,
     colorScheme: const ColorScheme.dark(

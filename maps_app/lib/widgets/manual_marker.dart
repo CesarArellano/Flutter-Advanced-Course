@@ -99,6 +99,7 @@ class _ManualMarkerBuild extends StatelessWidget {
       (coords) => LatLng(coords[0].toDouble(), coords[1].toDouble())
     ).toList();
     
+    if ( !context.mounted ) return;
     mapBloc.add(OnCreateRouteOriginDestination(routeCoords, distance!, duration!, destinationName!));
     Navigator.of(context).pop();
     searchingBloc.add( OnDeactivateManualMarker() );

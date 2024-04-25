@@ -4,15 +4,15 @@ import 'package:maps_app/bloc/services/traffic_service.dart';
 import 'package:maps_app/models/search_destinations_result.dart';
 
 class SearchDestination extends SearchDelegate<SearchDestinationsResult> {
-  @override
-  final String searchFieldLabel;
   final TrafficService _trafficService;
   final LatLng proximity;
   final List<SearchDestinationsResult> history;
-
+  
   SearchDestination( this.proximity, this.history ) : 
-    searchFieldLabel = 'Search...',
     _trafficService = TrafficService();
+    
+  @override
+  String get searchFieldLabel => 'Search...';
 
   @override
   List<Widget> buildActions(BuildContext context) {

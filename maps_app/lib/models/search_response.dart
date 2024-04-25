@@ -152,10 +152,10 @@ class Context {
     };
 }
 
-enum Language { ES }
+enum Language { es }
 
 final languageValues = EnumValues({
-    "es": Language.ES
+    "es": Language.es
 });
 
 class Geometry {

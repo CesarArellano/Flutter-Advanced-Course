@@ -152,12 +152,12 @@ final languageValues = EnumValues({
   "fr": Language.fr
 });
 
-enum ShortCode { AU_QLD, AU, AU_NSW }
+enum ShortCode { auQld, au, auNsw }
 
 final shortCodeValues = EnumValues({
-  "au": ShortCode.AU,
-  "AU-NSW": ShortCode.AU_NSW,
-  "AU-QLD": ShortCode.AU_QLD
+  "au": ShortCode.au,
+  "AU-NSW": ShortCode.auNsw,
+  "AU-QLD": ShortCode.auQld,
 });
 
 class Geometry {

@@ -32,9 +32,9 @@ class _HomePageState extends State<HomePage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8)
             ),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Icon( FontAwesomeIcons.google, color: Colors.white ),
                 SizedBox(width: 8),
                 Text('Sign in with Google', style: TextStyle(color: Colors.white, fontSize: 17)),
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     final account = await GoogleSignInService.signInWithGoogle();
     
     if( account == null ) {
-      if ( !mounted ) return;
+      if ( !context.mounted ) return;
       final scaffoldMessenger = ScaffoldMessenger.of(context);
       scaffoldMessenger.hideCurrentSnackBar();
       scaffoldMessenger.showSnackBar(
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    if ( !mounted ) return;
+    if ( !context.mounted ) return;
     Navigator.push(
       context, 
       CupertinoPageRoute(

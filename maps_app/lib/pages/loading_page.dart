@@ -10,7 +10,7 @@ class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
 
   @override
-  _LoadingPageState createState() => _LoadingPageState();
+  State<LoadingPage> createState() => _LoadingPageState();
 }
 
 class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
@@ -59,6 +59,8 @@ class _LoadingPageState extends State<LoadingPage> with WidgetsBindingObserver {
   Future<String> checkGpsAndLocation(BuildContext context) async {
     final gpsPermission = await Permission.location.isGranted;
     final gpsActive = await geolocator.Geolocator.isLocationServiceEnabled();
+    
+    if( !context.mounted) return '';
     
     if( gpsPermission && gpsActive ) {
       Navigator.pushReplacement(context, navigateMapFadeIn(context, const MapPage()));

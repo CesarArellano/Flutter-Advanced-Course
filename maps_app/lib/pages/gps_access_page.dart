@@ -8,7 +8,7 @@ class GpsAccessPage extends StatefulWidget {
 
 
   @override
-  _GpsAccessPageState createState() => _GpsAccessPageState();
+  State<GpsAccessPage> createState() => _GpsAccessPageState();
 }
 
 class _GpsAccessPageState extends State<GpsAccessPage> with WidgetsBindingObserver {
